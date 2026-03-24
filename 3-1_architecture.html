@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extra Information — 1. System Architecture</title>
+    <style>
+        :root {
+            --primary-brand-color: #1A365D;
+            --accent-color: #D4AF37;
+            --text-main: #333333;
+            --background-body: #FFFFFF;
+        }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main); background-color: var(--background-body);
+        }
+
+        .scroll-wrapper {
+            width: 100%; height: 100vh; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+            padding: 30px 40px 100px 40px; box-sizing: border-box;
+        }
+
+        .main-content { max-width: 900px; margin: 0 auto; }
+
+        h1 { color: var(--primary-brand-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; margin-top: 0; }
+        h2 { color: var(--primary-brand-color); margin-top: 50px; border-left: 4px solid var(--accent-color); padding-left: 12px; font-size: 1.8em; }
+        h3 { color: #4A5568; margin-top: 40px; }
+        h4 { color: var(--primary-brand-color); margin-bottom: 5px; font-size: 1.2em; }
+        p, li { font-size: 1.1em; color: #4A5568; }
+
+        img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #E2E8F0; }
+
+        .alert-box { background-color: #FFF3CD; border-left: 4px solid #F6E05E; color: #744210; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .tip-box { background-color: #EBF8FF; border-left: 4px solid #4299E1; color: #2B6CB0; padding: 15px; margin: 15px 0; border-radius: 6px; font-size: 1em; }
+
+        code { background: #EDF2F7; padding: 2px 6px; border-radius: 3px; font-size: 0.95em; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: var(--primary-brand-color); color: #fff; padding: 10px 14px; text-align: left; font-size: 1em; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 1em; color: #4A5568; }
+        tr:last-child td { border-bottom: none; }
+
+        .tree-diagram {
+            background-color: #1A202C; color: #A0AEC0; padding: 20px; border-radius: 6px;
+            font-family: monospace; font-size: 1.05em; line-height: 1.6; margin: 20px 0;
+        }
+        .tree-folder { color: #63B3ED; font-weight: bold; }
+        .tree-service { color: #68D391; }
+        .tree-db { color: #F6AD55; }
+
+        .page-indicator { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+        .page-indicator span { font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #A0AEC0; }
+        .page-indicator .page-badge { background: var(--accent-color); color: var(--primary-brand-color); padding: 3px 10px; border-radius: 20px; font-size: 0.78em; font-weight: 700; letter-spacing: 0.05em; }
+
+        .nav-buttons { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 60px; padding-top: 30px; border-top: 2px solid #EDF2F7; }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 6px; font-weight: 700; font-size: 1em; text-decoration: none; transition: all 0.2s; border: 2px solid transparent; }
+        .nav-btn-next { background-color: var(--primary-brand-color); color: #fff; border-color: var(--primary-brand-color); }
+        .nav-btn-next:hover { background-color: #2A4A7F; border-color: #2A4A7F; }
+        .nav-label { font-size: 0.8em; font-weight: 400; opacity: 0.75; display: block; }
+
+        /* Architecture diagram boxes */
+        .arch-flow {
+            display: flex; flex-direction: column; gap: 16px; margin: 24px 0;
+        }
+        .arch-row {
+            display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+        }
+        .arch-box {
+            background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 10px;
+            padding: 14px 18px; text-align: center; min-width: 160px; flex: 1; max-width: 220px;
+        }
+        .arch-box.user { border-color: #48BB78; background: #F0FFF4; }
+        .arch-box.app { border-color: var(--primary-brand-color); background: #EBF0F8; }
+        .arch-box.service { border-color: var(--accent-color); background: #FFFBEB; }
+        .arch-box.external { border-color: #E53E3E; background: #FFF5F5; }
+        .arch-box .box-icon { font-size: 1.5em; display: block; margin-bottom: 4px; }
+        .arch-box .box-label { font-size: 0.9em; font-weight: 600; color: var(--primary-brand-color); }
+        .arch-box .box-desc { font-size: 0.75em; color: #718096; margin-top: 2px; }
+        .arch-arrow { text-align: center; font-size: 1.3em; color: #A0AEC0; }
+    </style>
+</head>
+<body>
+<div class="scroll-wrapper">
+    <main class="main-content">
+
+        <div class="page-indicator">
+            <span class="page-badge">Page 1 of 2</span>
+            <span>Extra Information</span>
+        </div>
+
+        <h1>🗺️ System Architecture</h1>
+        <p>This page explains how the QA Bonus Grading App connects to external services and how data flows through the system. Understanding this helps troubleshoot issues and know where data lives.</p>
+
+        <!-- ─── HIGH-LEVEL FLOW ─── -->
+        <h2>1. High-Level Data Flow</h2>
+
+        <p>The app follows a layered architecture: the user interacts with the UI, which calls core modules, which in turn communicate with external Google services.</p>
+
+        <div class="arch-flow">
+            <div class="arch-row">
+                <div class="arch-box user">
+                    <span class="box-icon">👤</span>
+                    <span class="box-label">QA Agent / Admin</span>
+                    <span class="box-desc">Browser via HTTPS</span>
+                </div>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-row">
+                <div class="arch-box app">
+                    <span class="box-icon">🖥️</span>
+                    <span class="box-label">app.py + UI Panels</span>
+                    <span class="box-desc">Streamlit frontend</span>
+                </div>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-row">
+                <div class="arch-box service">
+                    <span class="box-icon">⚙️</span>
+                    <span class="box-label">Core Modules</span>
+                    <span class="box-desc">Ledger, Config, History</span>
+                </div>
+                <div class="arch-box service">
+                    <span class="box-icon">📄</span>
+                    <span class="box-label">PDF Generators</span>
+                    <span class="box-desc">Reports, Certs, Banners</span>
+                </div>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-row">
+                <div class="arch-box external">
+                    <span class="box-icon">📊</span>
+                    <span class="box-label">Google Sheets</span>
+                    <span class="box-desc">RAW_DB (all state)</span>
+                </div>
+                <div class="arch-box external">
+                    <span class="box-icon">🔍</span>
+                    <span class="box-label">BigQuery</span>
+                    <span class="box-desc">Call logs</span>
+                </div>
+                <div class="arch-box external">
+                    <span class="box-icon">📁</span>
+                    <span class="box-label">Google Drive</span>
+                    <span class="box-desc">PDF storage</span>
+                </div>
+                <div class="arch-box external">
+                    <span class="box-icon">💬</span>
+                    <span class="box-label">Google Chat</span>
+                    <span class="box-desc">DM dispatch</span>
+                </div>
+            </div>
+        </div>
+
+        <img src="https://drive.google.com/thumbnail?id=12FITQ_ZRbEuUGWFuQkBAHU3BnM_hp2ol&sz=w1000" alt="System Integration Flow Diagram">
+
+        <!-- ─── GOOGLE SHEETS ─── -->
+        <h2>2. Google Sheets Backend (RAW_DB)</h2>
+
+        <p>All persistent state lives in the <strong>RAW_DB</strong> spreadsheet. There are no local databases — everything is stored in Google Sheets tabs. Each environment (PROD / SANDBOX) has its own set of tabs.</p>
+
+        <table>
+            <tr>
+                <th>Tab</th>
+                <th>Purpose</th>
+                <th>Environment</th>
+            </tr>
+            <tr><td><code>Audit_Ledger</code></td><td>Weekly audit progress — stars, PDF links, sync/sent status</td><td>PROD</td></tr>
+            <tr><td><code>Audit_Ledger_Sandbox</code></td><td>Isolated audit progress for testing</td><td>SANDBOX</td></tr>
+            <tr><td><code>Audit_History</code></td><td>Permanent archive of closed weeks (append-only)</td><td>PROD</td></tr>
+            <tr><td><code>Audit_History_Sandbox</code></td><td>Isolated archive for testing</td><td>SANDBOX</td></tr>
+            <tr><td><code>Admin_Config</code></td><td>Penalty rules and dispatch settings</td><td>PROD</td></tr>
+            <tr><td><code>Admin_Config_Sandbox</code></td><td>Isolated penalty config for testing</td><td>SANDBOX</td></tr>
+            <tr><td><code>App_Config</code></td><td>Operational settings (SP tier target, retention, delays)</td><td>Shared</td></tr>
+            <tr><td><code>App_Env</code></td><td>Current environment: "prod" or "sandbox"</td><td>Shared</td></tr>
+            <tr><td><code>Whitelist_Config</code></td><td>Full Bonus agent list</td><td>PROD</td></tr>
+            <tr><td><code>SP_Tier_Config</code></td><td>SP Comercial Tier eligible agents</td><td>PROD</td></tr>
+            <tr><td><code>QA_Users</code></td><td>QA agent credentials and PIN hashes</td><td>Shared</td></tr>
+            <tr><td><code>QA_Activity_Log</code></td><td>Audit trail — logins, re-grades, PIN resets</td><td>Shared</td></tr>
+            <tr><td><code>Infrastructure_Ref</code></td><td>System config reference (auto-populated, read-only)</td><td>Shared</td></tr>
+        </table>
+
+        <div class="tip-box">
+            <strong>💡 Sandbox Auto-Creation:</strong> Tabs marked SANDBOX are <strong>auto-created</strong> the first time you switch to SANDBOX mode. You don't need to create them manually.
+        </div>
+
+        <!-- ─── GOOGLE DRIVE ─── -->
+        <h2>3. Google Drive — Folder Structure</h2>
+
+        <p>All generated files (PDFs and PNGs) are automatically uploaded to a shared Google Drive folder. The folder structure is organized by <strong>week</strong> and <strong>office</strong>.</p>
+
+        <div class="tree-diagram">
+            📁 <span class="tree-folder">Shared Drive Folder</span><br>
+            &nbsp;└── 📁 <span class="tree-folder">Mar 16th to Mar 22nd</span> &nbsp;&nbsp;← Current week (Mon–Sun)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">ARMY</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"a "</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">EGYPT</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"e "</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">NAYARIT</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"n "</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">SP-PR</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"sp " / "pr "</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📁 <span class="tree-folder">WEST</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"w "</span>
+        </div>
+
+        <h3>3.1 Office Prefix Mapping</h3>
+        <table>
+            <tr>
+                <th>Agent Name Starts With</th>
+                <th>Uploads To</th>
+            </tr>
+            <tr><td><code>sp </code> or <code>pr </code></td><td>📁 SP-PR</td></tr>
+            <tr><td><code>a </code></td><td>📁 ARMY</td></tr>
+            <tr><td><code>e </code></td><td>📁 EGYPT</td></tr>
+            <tr><td><code>n </code></td><td>📁 NAYARIT</td></tr>
+            <tr><td><code>w </code></td><td>📁 WEST</td></tr>
+        </table>
+
+        <h3>3.2 File Permissions &amp; Retention</h3>
+        <ul>
+            <li>Files are set to <strong>"Anyone with the link" — Reader</strong> permission. This enables link preview in Google Chat.</li>
+            <li>Files are <strong>retained permanently</strong> on Drive. There is no automatic cleanup.</li>
+            <li>Local copies on the server are auto-deleted after upload (configurable via <code>App_Config</code>).</li>
+        </ul>
+
+        <!-- ─── BIGQUERY ─── -->
+        <h2>4. BigQuery — Call Logs</h2>
+
+        <p>The app queries <strong>Google BigQuery</strong> to surface call recordings for QA review. When a QA agent selects dispositions to audit, the system pulls <strong>5 call logs per disposition</strong> for the configured date range.</p>
+
+        <ul>
+            <li>The date range for BigQuery queries is displayed in the sidebar under <strong>BQ Range</strong>.</li>
+            <li>QA agents can click <strong>Refresh</strong> on any disposition block to get a fresh set of 5 calls.</li>
+            <li>Query results are cached per session to reduce API calls.</li>
+        </ul>
+
+        <div class="alert-box">
+            <strong>⚠️ BigQuery Timeouts:</strong> If a query takes too long, the app shows an alert. Click the <strong>BQ Alert</strong> button in the empty state panel to retry. If the issue persists, contact the system administrator.
+        </div>
+
+        <!-- ─── NAV ─── -->
+        <div class="nav-buttons">
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/3-extra-information/3-2-history-reference?authuser=0" target="_parent" class="nav-btn nav-btn-next">
+                <span>
+                    <span class="nav-label">Next</span>
+                    Audit History &amp; Reference →
+                </span>
+            </a>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

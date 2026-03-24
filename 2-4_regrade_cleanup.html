@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Guide — 4. Re-grade, Ledger &amp; Cleanup</title>
+    <style>
+        :root {
+            --primary-brand-color: #1A365D;
+            --accent-color: #D4AF37;
+            --text-main: #333333;
+            --background-body: #FFFFFF;
+        }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main); background-color: var(--background-body);
+        }
+
+        .scroll-wrapper {
+            width: 100%; height: 100vh; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+            padding: 30px 40px 100px 40px; box-sizing: border-box;
+        }
+
+        .main-content { max-width: 900px; margin: 0 auto; }
+
+        h1 { color: var(--primary-brand-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; margin-top: 0; }
+        h2 { color: var(--primary-brand-color); margin-top: 50px; border-left: 4px solid var(--accent-color); padding-left: 12px; font-size: 1.8em; }
+        h3 { color: #4A5568; margin-top: 40px; }
+        h4 { color: var(--primary-brand-color); margin-bottom: 5px; font-size: 1.2em; }
+        p, li { font-size: 1.1em; color: #4A5568; }
+
+        img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #E2E8F0; }
+
+        .alert-box { background-color: #FFF3CD; border-left: 4px solid #F6E05E; color: #744210; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .success-box { background-color: #C6F6D5; border-left: 4px solid #48BB78; color: #22543D; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .tip-box { background-color: #EBF8FF; border-left: 4px solid #4299E1; color: #2B6CB0; padding: 15px; margin: 15px 0; border-radius: 6px; font-size: 1em; }
+        .danger-box { background-color: #FED7D7; border-left: 4px solid #FC8181; color: #9B2C2C; padding: 18px; margin: 25px 0; border-radius: 6px; }
+
+        code { background: #EDF2F7; padding: 2px 6px; border-radius: 3px; font-size: 0.95em; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: var(--primary-brand-color); color: #fff; padding: 10px 14px; text-align: left; font-size: 1em; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 1em; color: #4A5568; }
+        tr:last-child td { border-bottom: none; }
+
+        .page-indicator { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+        .page-indicator span { font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #A0AEC0; }
+        .page-indicator .page-badge { background: var(--accent-color); color: var(--primary-brand-color); padding: 3px 10px; border-radius: 20px; font-size: 0.78em; font-weight: 700; letter-spacing: 0.05em; }
+
+        .nav-buttons { display: flex; justify-content: flex-start; align-items: center; gap: 12px; margin-top: 60px; padding-top: 30px; border-top: 2px solid #EDF2F7; }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 6px; font-weight: 700; font-size: 1em; text-decoration: none; transition: all 0.2s; border: 2px solid transparent; }
+        .nav-btn-prev { background-color: #fff; color: var(--primary-brand-color); border-color: var(--primary-brand-color); }
+        .nav-btn-prev:hover { background-color: #EBF0F8; }
+        .nav-label { font-size: 0.8em; font-weight: 400; opacity: 0.75; display: block; }
+
+        ol li { margin-bottom: 20px; }
+        ol li strong { color: var(--primary-brand-color); }
+    </style>
+</head>
+<body>
+<div class="scroll-wrapper">
+    <main class="main-content">
+
+        <div class="page-indicator">
+            <span class="page-badge">Page 4 of 4</span>
+            <span>Admin Guide</span>
+        </div>
+
+        <h1>🔁 Re-grade, Ledger &amp; Cleanup</h1>
+        <p>This page covers corrective actions: resetting an agent's grade, editing ledger entries, resetting the entire week, and cleaning up local files.</p>
+
+        <!-- ─── RE-GRADE ─── -->
+        <h2>1. Re-grade Agent</h2>
+
+        <p>The Re-grade function resets an already-audited agent back to <strong>⚪ pending</strong> so a QA agent can redo the audit. This is available to <strong>all QA users</strong> (not just admins) from the sidebar.</p>
+
+        <div class="alert-box">
+            <strong>⚠️ Accountability:</strong> Every re-grade action is <strong>logged</strong> in the <code>QA_Activity_Log</code> sheet with the timestamp, the QA user who initiated it, and the agent name. This is an audit trail — use re-grade only when genuinely needed.
+        </div>
+
+        <h3>1.1 How to Re-grade</h3>
+        <ol>
+            <li>In the sidebar, expand <strong>🔁 Re-grade Agent</strong>.</li>
+            <li>Use the <strong>search filter</strong> to find the agent (e.g., type "garcia", "sp", "a m").</li>
+            <li>Select the agent from the dropdown.</li>
+            <li>A confirmation card appears showing:
+                <ul>
+                    <li>Agent name</li>
+                    <li>Current status (🟣 Audited or 🔵 Synced)</li>
+                    <li>Current star rating</li>
+                    <li>Week slot</li>
+                </ul>
+            </li>
+            <li>Click <strong>🔁 Reset to pending</strong>.</li>
+            <li>The agent returns to ⚪ and can be graded again.</li>
+        </ol>
+
+        <img src="https://drive.google.com/thumbnail?id=1z3ugCU375FUQcNF9MtQEPdFtkZXZh7X8&sz=w1000" alt="Re-grade Agent Panel">
+
+        <h3>1.2 Restrictions</h3>
+        <p>The following agents <strong>cannot</strong> be re-graded:</p>
+
+        <table>
+            <tr>
+                <th>Agent Type</th>
+                <th>Reason</th>
+            </tr>
+            <tr><td>🚫 Suspended</td><td>Automatic disqualification — cannot be overridden via re-grade</td></tr>
+            <tr><td>⭐ Whitelisted</td><td>Full bonus is admin-configured — remove from whitelist instead</td></tr>
+            <tr><td>⭐ SP Tier</td><td>Performance-based qualification — remove from SP Tier list instead</td></tr>
+        </table>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> If a whitelisted or SP Tier agent needs correction, first remove them from the respective list (Whitelist or SP Tier panel), then re-grade if needed.
+        </div>
+
+        <!-- ─── LEDGER & CLEANUP ─── -->
+        <h2>2. Ledger &amp; Cleanup</h2>
+
+        <p>The <strong>🗑️ Ledger &amp; Cleanup</strong> section in Admin Settings provides manual control over the audit ledger. Use this for fixing state errors or performing week-level resets.</p>
+
+        <img src="https://drive.google.com/thumbnail?id=1ZGRkxwroXUJqvYlJr2hSUVY0GGtHkhu4&sz=w1000" alt="Ledger and Cleanup Section">
+
+        <h3>2.1 Edit / Remove Individual Agent</h3>
+        <ol>
+            <li>Use the <strong>search box</strong> to find an agent.</li>
+            <li>Select the agent from the dropdown.</li>
+            <li>The current state is displayed with editable checkboxes:
+                <ul>
+                    <li><strong>Synced (HR)</strong> — whether the agent has been synced to the HR Spreadsheet.</li>
+                    <li><strong>Sent (Chat)</strong> — whether the agent has been dispatched via Google Chat.</li>
+                </ul>
+            </li>
+            <li>Choose an action:
+                <ul>
+                    <li><strong>💾 Save Changes</strong> — updates only the synced/sent flags in the ledger.</li>
+                    <li><strong>🗑️ Remove Agent</strong> — completely deletes the agent's record from this week's ledger.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <div class="tip-box">
+            <strong>💡 Use Case:</strong> If an agent was accidentally synced to HR but shouldn't have been, you can uncheck "Synced (HR)" and save. This resets them to 🟣 so you can re-sync after correcting the issue.
+        </div>
+
+        <h3>2.2 Full Week Reset</h3>
+
+        <div class="danger-box">
+            <strong>🚨 Destructive Action:</strong> This permanently clears <strong>all agent records</strong> for the active week. There is no undo. Use only when you need to start the entire week's grading from scratch.
+        </div>
+
+        <ol>
+            <li>In <strong>🗑️ Ledger &amp; Cleanup</strong>, note the active week displayed (e.g., "Active week: <code>Mar 16th to Mar 22nd</code>").</li>
+            <li>Click <strong>🗑️ Reset Entire [Week] Ledger</strong>.</li>
+            <li>All agent records for that week are wiped — everyone returns to ⚪ pending.</li>
+        </ol>
+
+        <h3>2.3 Local Files Cleanup</h3>
+        <p>PDFs are automatically deleted from the server after upload to Google Drive. In edge cases where local files remain, this section lets you clean them up manually.</p>
+
+        <ol>
+            <li>The panel shows a count of local PDF files on the server.</li>
+            <li>Click <strong>🗑️ Delete All Local PDFs</strong>.</li>
+            <li>Files are deleted from the server only — Google Drive copies are unaffected.</li>
+        </ol>
+
+        <div class="tip-box">
+            <strong>💡 Safe Operation:</strong> Since all PDFs are already uploaded to Google Drive before reaching this point, deleting local copies has no impact on the stored records or links shared with agents.
+        </div>
+
+        <!-- ─── SUMMARY ─── -->
+        <h2>3. Quick Reference — Corrective Actions</h2>
+
+        <table>
+            <tr>
+                <th>Scenario</th>
+                <th>Action</th>
+            </tr>
+            <tr><td>QA made a grading error on one agent</td><td>🔁 Re-grade Agent → re-audit</td></tr>
+            <tr><td>Agent was synced to HR by mistake</td><td>Ledger &amp; Cleanup → uncheck "Synced" → Save</td></tr>
+            <tr><td>Agent record needs complete removal</td><td>Ledger &amp; Cleanup → 🗑️ Remove Agent</td></tr>
+            <tr><td>Whitelisted agent should not be full bonus</td><td>Remove from Whitelist → Re-grade if needed</td></tr>
+            <tr><td>Entire week needs to start over</td><td>🗑️ Reset Entire Week Ledger</td></tr>
+            <tr><td>Local PDF files accumulating on server</td><td>🗑️ Delete All Local PDFs</td></tr>
+        </table>
+
+        <!-- ─── NAV ─── -->
+        <div class="nav-buttons">
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-3-send-functions?authuser=0" target="_parent" class="nav-btn nav-btn-prev">
+                ← <span>
+                    <span class="nav-label">Previous</span>
+                    Send Functions
+                </span>
+            </a>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

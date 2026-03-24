@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Agent Guide — 2. Grading Workflow</title>
+    <style>
+        :root {
+            --primary-brand-color: #1A365D;
+            --accent-color: #D4AF37;
+            --text-main: #333333;
+            --background-body: #FFFFFF;
+        }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main); background-color: var(--background-body);
+        }
+
+        .scroll-wrapper {
+            width: 100%; height: 100vh; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+            padding: 30px 40px 100px 40px; box-sizing: border-box;
+        }
+
+        .main-content {
+            max-width: 900px; margin: 0 auto;
+        }
+
+        h1 { color: var(--primary-brand-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; margin-top: 0; }
+        h2 { color: var(--primary-brand-color); margin-top: 50px; border-left: 4px solid var(--accent-color); padding-left: 12px; font-size: 1.8em; }
+        h3 { color: #4A5568; margin-top: 40px; }
+        h4 { color: var(--primary-brand-color); margin-bottom: 5px; font-size: 1.2em; }
+        p, li { font-size: 1.1em; color: #4A5568; }
+
+        img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #E2E8F0; }
+
+        .alert-box { background-color: #FFF3CD; border-left: 4px solid #F6E05E; color: #744210; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .success-box { background-color: #C6F6D5; border-left: 4px solid #48BB78; color: #22543D; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .tip-box { background-color: #EBF8FF; border-left: 4px solid #4299E1; color: #2B6CB0; padding: 15px; margin: 15px 0; border-radius: 6px; font-size: 1em; }
+
+        .btn-mockup { background-color: var(--primary-brand-color); color: white; padding: 6px 12px; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 0.9em; }
+
+        .status-pill { padding: 2px 8px; border-radius: 12px; font-size: 0.85em; font-weight: bold; color: white; }
+        .pill-white { background-color: #FFFFFF; color: #333; border: 1px solid #CBD5E0; }
+        .pill-purple { background-color: #6B46C1; }
+
+        /* Page indicator */
+        .page-indicator {
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 28px;
+        }
+        .page-indicator span {
+            font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em;
+            text-transform: uppercase; color: #A0AEC0;
+        }
+        .page-indicator .page-badge {
+            background: var(--accent-color); color: var(--primary-brand-color);
+            padding: 3px 10px; border-radius: 20px; font-size: 0.78em;
+            font-weight: 700; letter-spacing: 0.05em;
+        }
+
+        /* Nav buttons */
+        .nav-buttons {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 12px; margin-top: 60px; padding-top: 30px;
+            border-top: 2px solid #EDF2F7;
+        }
+        .nav-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px; border-radius: 6px; font-weight: 700;
+            font-size: 1em; text-decoration: none; transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .nav-btn-next {
+            background-color: var(--primary-brand-color); color: #fff;
+            border-color: var(--primary-brand-color);
+        }
+        .nav-btn-next:hover { background-color: #2A4A7F; border-color: #2A4A7F; }
+        .nav-btn-prev {
+            background-color: #fff; color: var(--primary-brand-color);
+            border-color: var(--primary-brand-color);
+        }
+        .nav-btn-prev:hover { background-color: #EBF0F8; }
+        .nav-label { font-size: 0.8em; font-weight: 400; opacity: 0.75; display: block; }
+
+        /* Step list styling */
+        ol { padding-left: 1.4em; }
+        ol li { margin-bottom: 24px; }
+        ol li strong { color: var(--primary-brand-color); }
+
+        /* Penalty table */
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: var(--primary-brand-color); color: #fff; padding: 10px 14px; text-align: left; font-size: 1em; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 1em; color: #4A5568; }
+        tr:last-child td { border-bottom: none; }
+
+        /* Penalty warning chip */
+        .penalty-chip {
+            display: inline-block; background: #FED7D7; color: #C53030;
+            border-radius: 4px; padding: 1px 8px; font-size: 0.88em; font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+<div class="scroll-wrapper">
+    <main class="main-content">
+
+        <div class="page-indicator">
+            <span class="page-badge">Page 2 of 4</span>
+            <span>QA Agent Guide</span>
+        </div>
+
+        <h1>✅ The Grading Workflow</h1>
+        <p>This page walks you through every step from selecting an agent to confirming the grade is locked in. Follow this flow exactly — in the correct order — to avoid incomplete records.</p>
+
+        <!-- ─── 2.1 ─── -->
+        <h2>2.1 The Sidebar — Your Mission Control</h2>
+
+        <p>The sidebar gives you a real-time view of this week's audit progress. Before you start any session, scan the sidebar to identify who still has a white label <strong>⚪</strong>.</p>
+
+        <ul>
+            <li><strong>⚪ White label</strong> — Pending. This agent has not been graded yet this week. This is your target.</li>
+            <li><strong>🟣 Purple label</strong> — Done. You have already completed the audit and the PDF is saved.</li>
+        </ul>
+
+        <div class="alert-box">
+            <strong>⚠️ Important:</strong> Only agents with a <strong>⚪ white label</strong> are available for grading in the current week. If you accidentally click a purple one, the system will open a read-only view — you won't be able to overwrite it unless the Administrator initiates a <strong>Re-grade</strong>.
+        </div>
+
+        <p><strong>Your goal every shift:</strong> Ensure every agent in your assigned list turns <strong>Purple 🟣</strong> before you log off.</p>
+
+        <img src="https://drive.google.com/thumbnail?id=19ugQsB3SduBObsTbMr9VSQN2LUsMwVYA&sz=w1000" alt="Sidebar Progress Tracker">
+
+        <!-- ─── 2.2 ─── -->
+        <h2>2.2 Step-by-Step Grading</h2>
+
+        <ol>
+
+            <li>
+                <strong>Select the Agent.</strong>
+                <p>Click on any agent showing a white <strong>⚪</strong> label in the sidebar (e.g., <code>⚪ sp mathew</code>). The main panel will load their profile and call log dashboard.</p>
+                <img src="https://drive.google.com/thumbnail?id=1jfQd_jJZh8_nNSJm1QCGFJNrihp1oUCu&sz=w1000" alt="Agent Selection">
+            </li>
+
+            <li>
+                <strong>Select Dispositions &amp; Review Call Logs.</strong>
+                <p>Choose which call dispositions you want to audit. The system will automatically surface <strong>5 call logs per disposition</strong> pulled from <strong>BigQuery</strong> for the configured date range.</p>
+
+                <div class="tip-box">
+                    <strong>💡 Pro Tip — Refresh Button:</strong> If the 5 calls shown don't give you a representative sample, click the <strong>Refresh</strong> button underneath that disposition block. The system will query BigQuery for a fresh set of 5 logs. You can refresh as many times as needed.
+                </div>
+
+                <img src="https://drive.google.com/thumbnail?id=1PfTEHi6TDdqcLiI4VB2NutIlrI1zF1ht&sz=w1000" alt="Call Logs Dashboard">
+            </li>
+
+            <li>
+                <strong>Fill in the Grading Tab.</strong>
+                <p>Switch to the <strong>Grading &amp; Score</strong> tab. For each infraction category, enter the count of flagged calls you found. The system compares your counts against the penalty thresholds defined by the Administrator and auto-calculates the deductions.</p>
+
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 16px 0;">
+                    <h4 style="margin-top: 0;">⚖️ Default Penalty Reference</h4>
+                    <p style="font-size: 0.95em; color: #718096; margin-bottom: 12px;">Penalty rules are set by the Administrator and may be updated at any time. What you see in-app is always the live version.</p>
+                    <table>
+                        <tr>
+                            <th>Infraction</th>
+                            <th>Deduction</th>
+                            <th>Triggers when…</th>
+                        </tr>
+                        <tr><td>Call Avoidance</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 1 flagged call</td></tr>
+                        <tr><td>Wrong Disposition</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 3 flagged calls</td></tr>
+                        <tr><td>Script Violation</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 3 flagged calls</td></tr>
+                        <tr><td>Tone / Attitude</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 1 flagged call</td></tr>
+                        <tr><td>Other</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 1 flagged call</td></tr>
+                    </table>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 How Penalties Work:</strong> The system loads thresholds from <code>Admin_Config</code> on the Sheets backend. For each infraction, if your flagged count meets or exceeds the threshold, the star deduction is applied automatically. Below the threshold = no penalty for that category.
+                </div>
+            </li>
+
+            <li>
+                <strong>Add Qualitative Feedback.</strong>
+                <p>Fill in the written observations for the agent. This text appears directly on the generated PDF. Be specific and constructive — agents will read this.</p>
+            </li>
+
+            <li>
+                <strong>Click <span class="btn-mockup">Generate</span>.</strong>
+                <p>The system will:</p>
+                <ul>
+                    <li>Calculate the final star rating based on your inputs and any penalties.</li>
+                    <li>Select the correct output format automatically (Report Card, Certificate, or Suspension Banner).</li>
+                    <li>Generate the PDF/PNG and upload it to the correct Google Drive folder.</li>
+                    <li>Save the record to <code>Audit_Ledger</code> in the Sheets backend.</li>
+                    <li>Immediately update the agent's sidebar label from <strong>⚪ White → 🟣 Purple</strong>.</li>
+                </ul>
+
+                <div class="success-box">
+                    <strong>✅ You're Done!</strong> Once you see the Purple label, your job for that agent is complete. The Administrator will handle the remaining steps (🔵 HR Sync → 🟢 Chat dispatch).
+                </div>
+            </li>
+
+        </ol>
+
+        <!-- ─── NAV ─── -->
+        <div class="nav-buttons">
+
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide/1-1-access-progress?authuser=0" target="_parent" class="nav-btn nav-btn-prev">
+                ← <span>
+                    <span class="nav-label">Previous</span>
+                    Access &amp; Setup
+                </span>
+            </a>
+
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide/1-3-understanding-outputs?authuser=0" target="_parent" class="nav-btn nav-btn-next">
+                <span>
+                    <span class="nav-label">Next</span>
+                    Grading Outputs →
+                </span>
+            </a>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

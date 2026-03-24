@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Guide — 1. Admin Access &amp; Environment</title>
+    <style>
+        :root {
+            --primary-brand-color: #1A365D;
+            --accent-color: #D4AF37;
+            --text-main: #333333;
+            --background-body: #FFFFFF;
+        }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main); background-color: var(--background-body);
+        }
+
+        .scroll-wrapper {
+            width: 100%; height: 100vh; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+            padding: 30px 40px 100px 40px; box-sizing: border-box;
+        }
+
+        .main-content { max-width: 900px; margin: 0 auto; }
+
+        h1 { color: var(--primary-brand-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; margin-top: 0; }
+        h2 { color: var(--primary-brand-color); margin-top: 50px; border-left: 4px solid var(--accent-color); padding-left: 12px; font-size: 1.8em; }
+        h3 { color: #4A5568; margin-top: 40px; }
+        h4 { color: var(--primary-brand-color); margin-bottom: 5px; font-size: 1.2em; }
+        p, li { font-size: 1.1em; color: #4A5568; }
+
+        img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #E2E8F0; }
+
+        .alert-box { background-color: #FFF3CD; border-left: 4px solid #F6E05E; color: #744210; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .success-box { background-color: #C6F6D5; border-left: 4px solid #48BB78; color: #22543D; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .tip-box { background-color: #EBF8FF; border-left: 4px solid #4299E1; color: #2B6CB0; padding: 15px; margin: 15px 0; border-radius: 6px; font-size: 1em; }
+        .danger-box { background-color: #FED7D7; border-left: 4px solid #FC8181; color: #9B2C2C; padding: 18px; margin: 25px 0; border-radius: 6px; }
+
+        code { background: #EDF2F7; padding: 2px 6px; border-radius: 3px; font-size: 0.95em; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: var(--primary-brand-color); color: #fff; padding: 10px 14px; text-align: left; font-size: 1em; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 1em; color: #4A5568; }
+        tr:last-child td { border-bottom: none; }
+
+        .page-indicator { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+        .page-indicator span { font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #A0AEC0; }
+        .page-indicator .page-badge { background: var(--accent-color); color: var(--primary-brand-color); padding: 3px 10px; border-radius: 20px; font-size: 0.78em; font-weight: 700; letter-spacing: 0.05em; }
+
+        .nav-buttons { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 60px; padding-top: 30px; border-top: 2px solid #EDF2F7; }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 6px; font-weight: 700; font-size: 1em; text-decoration: none; transition: all 0.2s; border: 2px solid transparent; }
+        .nav-btn-next { background-color: var(--primary-brand-color); color: #fff; border-color: var(--primary-brand-color); }
+        .nav-btn-next:hover { background-color: #2A4A7F; border-color: #2A4A7F; }
+        .nav-btn-prev { background-color: #fff; color: var(--primary-brand-color); border-color: var(--primary-brand-color); }
+        .nav-btn-prev:hover { background-color: #EBF0F8; }
+        .nav-label { font-size: 0.8em; font-weight: 400; opacity: 0.75; display: block; }
+
+        .env-comparison { display: flex; gap: 20px; flex-wrap: wrap; margin: 25px 0; }
+        .env-card { flex: 1; min-width: 300px; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; border-top: 4px solid var(--primary-brand-color); }
+        .env-card.sandbox { border-top-color: #ECC94B; }
+        .env-card h4 { margin-top: 0; }
+    </style>
+</head>
+<body>
+<div class="scroll-wrapper">
+    <main class="main-content">
+
+        <div class="page-indicator">
+            <span class="page-badge">Page 1 of 4</span>
+            <span>Admin Guide</span>
+        </div>
+
+        <h1>🔑 Admin Access &amp; Environment</h1>
+        <p>This section covers how to unlock Admin Mode, what features become available, and how the <strong>PROD / SANDBOX</strong> environment system works. Admin access is required for all operations described in this chapter.</p>
+
+        <div class="alert-box">
+            <strong>⚠️ Admin Only:</strong> Everything in this chapter requires the Admin PIN. Regular QA agents do not have access to these features. If you are a regular QA agent, refer to <strong>Chapter 1 — QA Agent Guide</strong>.
+        </div>
+
+        <!-- ─── SECTION 1 ─── -->
+        <h2>1. Unlocking Admin Mode</h2>
+
+        <h3>1.1 Where to Find It</h3>
+        <p>Admin Settings is located in the <strong>sidebar</strong>, below the Audit Progress List. Look for the <strong>⚙️ Admin Settings</strong> expander.</p>
+
+        <ol>
+            <li>Expand the <strong>⚙️ Admin Settings</strong> section in the sidebar.</li>
+            <li>Enter the <strong>Admin PIN</strong> in the input field.</li>
+            <li>Once the correct PIN is entered, all admin features will unlock immediately.</li>
+        </ol>
+
+        <div class="success-box">
+            <strong>✅ Admin Mode Unlocked</strong> — You will see a green confirmation message. All admin panels (Penalty Rules, Send Functions, Whitelist, SP Tier, Ledger & Cleanup) become visible.
+        </div>
+
+        <img src="https://drive.google.com/thumbnail?id=1wS2OTgdipsXDmbyfLqnbPy8TKBTRWSzt&sz=w1000" alt="Admin PIN Entry">
+
+        <h3>1.2 What Unlocks</h3>
+        <p>Once admin mode is active, the following panels appear inside the Admin Settings expander:</p>
+
+        <table>
+            <tr>
+                <th>Panel</th>
+                <th>Purpose</th>
+            </tr>
+            <tr><td>⚖️ Edit Penalty Rules</td><td>Adjust star deductions and evidence thresholds for each infraction category</td></tr>
+            <tr><td>🚀 Send Functions</td><td>HR Spreadsheet sync and Google Chat dispatch</td></tr>
+            <tr><td>⭐ Full Bonus Whitelist</td><td>Mark agents for automatic full bonus (bypasses grading)</td></tr>
+            <tr><td>🏆 SP Comercial Tier</td><td>Flag agents eligible for SP Tier bonus (45+ leads)</td></tr>
+            <tr><td>🗑️ Ledger &amp; Cleanup</td><td>Reset week, edit/remove individual agents, delete local files</td></tr>
+            <tr><td>🌍 Environment Toggle</td><td>Switch between PROD and SANDBOX</td></tr>
+        </table>
+
+        <!-- ─── SECTION 2 ─── -->
+        <h2>2. PROD vs SANDBOX Environment</h2>
+
+        <p>The app operates in one of two environments at all times. A single toggle in Admin Settings controls which environment is active. <strong>The environment is global</strong> — switching it affects all QA agents currently using the app.</p>
+
+        <div class="env-comparison">
+            <div class="env-card">
+                <h4>🟢 PROD (Production)</h4>
+                <ul>
+                    <li>All data writes go to <strong>live</strong> Sheets tabs</li>
+                    <li>HR Sync pushes to the <strong>real HR Spreadsheet</strong></li>
+                    <li>Chat dispatch sends to <strong>real agent emails</strong></li>
+                    <li>Audit Ledger: <code>Audit_Ledger</code></li>
+                    <li>Admin Config: <code>Admin_Config</code></li>
+                    <li>Whitelist: <code>Whitelist_Config</code></li>
+                    <li>SP Tier: <code>SP_Tier_Config</code></li>
+                </ul>
+            </div>
+            <div class="env-card sandbox">
+                <h4>🟡 SANDBOX (Testing)</h4>
+                <ul>
+                    <li>All data writes go to <strong>isolated sandbox</strong> tabs</li>
+                    <li>HR Sync still works but writes to <strong>sandbox tab</strong></li>
+                    <li>Chat dispatch sends to <strong>test email only</strong></li>
+                    <li>Audit Ledger: <code>Audit_Ledger_Sandbox</code></li>
+                    <li>Admin Config: <code>Admin_Config_Sandbox</code></li>
+                    <li>Whitelist: <code>Whitelist_Config_Sandbox</code></li>
+                    <li>SP Tier: <code>SP_Tier_Config_Sandbox</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Key Rule:</strong> PROD data is <strong>never</strong> affected by SANDBOX activity. The two environments are completely isolated. Sandbox tabs are auto-created the first time you switch to SANDBOX.
+        </div>
+
+        <h3>2.1 How to Switch Environments</h3>
+        <ol>
+            <li>Open <strong>⚙️ Admin Settings</strong> in the sidebar.</li>
+            <li>Find the <strong>Environment</strong> section.</li>
+            <li>Toggle the switch to <strong>SANDBOX</strong> or <strong>PROD</strong>.</li>
+            <li>The app will immediately reload all data from the target environment's Sheets tabs.</li>
+        </ol>
+
+        <img src="https://drive.google.com/thumbnail?id=1j42FBpOA2TThOitbuyiIgYZ-ITeeDwhZ&sz=w1000" alt="Environment Toggle">
+
+        <div class="danger-box">
+            <strong>🚨 Important:</strong> Switching the environment affects <strong>all active QA sessions</strong>. If other QA agents are currently grading, coordinate with them before switching. Always switch back to <strong>PROD</strong> when you finish testing.
+        </div>
+
+        <h3>2.2 When to Use SANDBOX</h3>
+        <ul>
+            <li><strong>Training new QA agents</strong> — let them practice grading without affecting real data.</li>
+            <li><strong>Testing penalty rule changes</strong> — verify new thresholds before applying to production.</li>
+            <li><strong>Testing Send Functions</strong> — confirm HR sync and Chat dispatch work correctly without sending to real agents.</li>
+            <li><strong>Debugging issues</strong> — reproduce problems in an isolated environment.</li>
+        </ul>
+
+        <!-- ─── NAV ─── -->
+        <div class="nav-buttons">
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-2-config-whitelist?authuser=0" target="_parent" class="nav-btn nav-btn-next">
+                <span>
+                    <span class="nav-label">Next</span>
+                    Penalties, Whitelist &amp; SP Tier →
+                </span>
+            </a>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

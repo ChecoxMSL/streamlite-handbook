@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Guide — 3. Send Functions</title>
+    <style>
+        :root {
+            --primary-brand-color: #1A365D;
+            --accent-color: #D4AF37;
+            --text-main: #333333;
+            --background-body: #FFFFFF;
+        }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main); background-color: var(--background-body);
+        }
+
+        .scroll-wrapper {
+            width: 100%; height: 100vh; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+            padding: 30px 40px 100px 40px; box-sizing: border-box;
+        }
+
+        .main-content { max-width: 900px; margin: 0 auto; }
+
+        h1 { color: var(--primary-brand-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; margin-top: 0; }
+        h2 { color: var(--primary-brand-color); margin-top: 50px; border-left: 4px solid var(--accent-color); padding-left: 12px; font-size: 1.8em; }
+        h3 { color: #4A5568; margin-top: 40px; }
+        h4 { color: var(--primary-brand-color); margin-bottom: 5px; font-size: 1.2em; }
+        p, li { font-size: 1.1em; color: #4A5568; }
+
+        img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #E2E8F0; }
+
+        .alert-box { background-color: #FFF3CD; border-left: 4px solid #F6E05E; color: #744210; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .success-box { background-color: #C6F6D5; border-left: 4px solid #48BB78; color: #22543D; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .tip-box { background-color: #EBF8FF; border-left: 4px solid #4299E1; color: #2B6CB0; padding: 15px; margin: 15px 0; border-radius: 6px; font-size: 1em; }
+        .danger-box { background-color: #FED7D7; border-left: 4px solid #FC8181; color: #9B2C2C; padding: 18px; margin: 25px 0; border-radius: 6px; }
+
+        code { background: #EDF2F7; padding: 2px 6px; border-radius: 3px; font-size: 0.95em; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: var(--primary-brand-color); color: #fff; padding: 10px 14px; text-align: left; font-size: 1em; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 1em; color: #4A5568; }
+        tr:last-child td { border-bottom: none; }
+
+        .page-indicator { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+        .page-indicator span { font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #A0AEC0; }
+        .page-indicator .page-badge { background: var(--accent-color); color: var(--primary-brand-color); padding: 3px 10px; border-radius: 20px; font-size: 0.78em; font-weight: 700; letter-spacing: 0.05em; }
+
+        .nav-buttons { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 60px; padding-top: 30px; border-top: 2px solid #EDF2F7; }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 6px; font-weight: 700; font-size: 1em; text-decoration: none; transition: all 0.2s; border: 2px solid transparent; }
+        .nav-btn-next { background-color: var(--primary-brand-color); color: #fff; border-color: var(--primary-brand-color); }
+        .nav-btn-next:hover { background-color: #2A4A7F; border-color: #2A4A7F; }
+        .nav-btn-prev { background-color: #fff; color: var(--primary-brand-color); border-color: var(--primary-brand-color); }
+        .nav-btn-prev:hover { background-color: #EBF0F8; }
+        .nav-label { font-size: 0.8em; font-weight: 400; opacity: 0.75; display: block; }
+
+        /* Flow diagram */
+        .flow-diagram {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0; margin: 30px 0; flex-wrap: wrap;
+        }
+        .flow-step {
+            background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 10px;
+            padding: 16px 20px; text-align: center; min-width: 140px;
+        }
+        .flow-step.active { border-color: var(--accent-color); background: #FFFBEB; }
+        .flow-step .step-icon { font-size: 1.8em; display: block; margin-bottom: 6px; }
+        .flow-step .step-label { font-size: 0.85em; font-weight: 600; color: var(--primary-brand-color); }
+        .flow-step .step-desc { font-size: 0.75em; color: #718096; margin-top: 4px; }
+        .flow-arrow { font-size: 1.5em; color: var(--accent-color); padding: 0 8px; font-weight: bold; }
+
+        ol li { margin-bottom: 20px; }
+        ol li strong { color: var(--primary-brand-color); }
+    </style>
+</head>
+<body>
+<div class="scroll-wrapper">
+    <main class="main-content">
+
+        <div class="page-indicator">
+            <span class="page-badge">Page 3 of 4</span>
+            <span>Admin Guide</span>
+        </div>
+
+        <h1>🚀 Send Functions</h1>
+        <p>After all QA agents have completed their grading (all agents are 🟣 Purple), the Administrator completes the final two steps: <strong>HR Sync</strong> and <strong>Google Chat Dispatch</strong>. These must be done <strong>in order</strong>.</p>
+
+        <!-- ─── FLOW DIAGRAM ─── -->
+        <div class="flow-diagram">
+            <div class="flow-step">
+                <span class="step-icon">🟣</span>
+                <span class="step-label">PDF Generated</span>
+                <span class="step-desc">QA Agent completes grading</span>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step active">
+                <span class="step-icon">🔵</span>
+                <span class="step-label">HR Sync</span>
+                <span class="step-desc">Admin pushes to HR Sheet</span>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step active">
+                <span class="step-icon">🟢</span>
+                <span class="step-label">Chat Dispatch</span>
+                <span class="step-desc">Admin sends via Google Chat</span>
+            </div>
+        </div>
+
+        <div class="danger-box">
+            <strong>🚨 Order Matters:</strong> You <strong>must</strong> run HR Sync before Chat Dispatch. The system enforces this — agents in 🟣 status cannot be dispatched via Chat until they are first synced to the HR Spreadsheet (🔵).
+        </div>
+
+        <!-- ─── STAGE 1: HR SYNC ─── -->
+        <h2>1. Stage 1 — HR Spreadsheet Sync (🟣 → 🔵)</h2>
+
+        <p>This step pushes the audit results from the internal ledger to the <strong>HR Spreadsheet</strong> so the HR department has a record of each agent's bonus qualification.</p>
+
+        <h3>1.1 How to Run</h3>
+        <ol>
+            <li><strong>Open Admin Settings</strong> → expand <strong>🚀 Send Functions</strong>.</li>
+            <li>Review the <strong>pending counts</strong> displayed at the top: <em>"Pending: X → HR Sheet (🟣) | Y → Chat (🔵)"</em>.</li>
+            <li>Click <strong>📊 Send QA Bonus to HR Spreadsheet</strong>.</li>
+            <li>The system processes each 🟣 agent and writes a row to the HR Spreadsheet.</li>
+        </ol>
+
+        <img src="https://drive.google.com/thumbnail?id=1mQw-G-yQPUG95mTQqBrMtKfAqwbv6jjO&sz=w1000" alt="HR Sync Button">
+
+        <h3>1.2 What Gets Written to the HR Spreadsheet</h3>
+        <p>For each agent, the system inserts a row with:</p>
+
+        <table>
+            <tr>
+                <th>Column</th>
+                <th>Content</th>
+            </tr>
+            <tr><td>Timestamp</td><td>Date and time of the sync (YYYY-MM-DD HH:MM:SS)</td></tr>
+            <tr><td>Agent Name</td><td>Full agent name as it appears in the sidebar</td></tr>
+            <tr><td>QA Stars</td><td>Final star rating (e.g., "4.0 ★")</td></tr>
+            <tr><td>Cash</td><td>Cash conversion calculated from stars</td></tr>
+            <tr><td>QA Agent</td><td>Name of the QA agent who performed the grading</td></tr>
+        </table>
+
+        <div class="tip-box">
+            <strong>💡 Week Organization:</strong> If this is the first sync for the current week, the system automatically creates a <strong>week label row</strong> (e.g., "03/16-03/22 (Week 12)") and a <strong>header row</strong> in the HR Spreadsheet before inserting agent rows. This keeps the spreadsheet organized by week.
+        </div>
+
+        <div class="success-box">
+            <strong>✅ After Sync:</strong> Agent labels in the sidebar turn from 🟣 Purple to <strong>🔵 Blue</strong>. The confirmation message shows: <em>"✅ X agent(s) synced to HR under 'MM/DD-MM/DD'."</em>
+        </div>
+
+        <!-- ─── STAGE 2: CHAT DISPATCH ─── -->
+        <h2>2. Stage 2 — Google Chat Dispatch (🔵 → 🟢)</h2>
+
+        <p>This step sends each agent their individual QA Bonus result via <strong>Google Chat DM</strong>. The message includes a link to their PDF (Report Card, Certificate, or Suspension Banner) stored in Google Drive.</p>
+
+        <h3>2.1 How to Run</h3>
+        <ol>
+            <li>In <strong>🚀 Send Functions</strong>, scroll to the <strong>📤 Send PDF Preview via Google Chat</strong> section.</li>
+            <li>Verify the current mode is displayed: <strong>🟢 PROD</strong> or <strong>🟡 SANDBOX</strong>.</li>
+            <li>Review the list of agents with PDFs ready to dispatch.</li>
+            <li>Click <strong>📨 Send PDF Cards via Google Chat</strong>.</li>
+            <li>The system sends a DM to each agent with their PDF link.</li>
+        </ol>
+
+        <img src="https://drive.google.com/thumbnail?id=1hEGEhiyg-FXc6UtasbrSjlx1W-rSgF1e&sz=w1000" alt="Chat Dispatch Section">
+
+        <h3>2.2 Message Content</h3>
+
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+            <div style="flex: 1; min-width: 280px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; border-top: 4px solid #48BB78;">
+                <h4 style="margin-top: 0;">🟢 PROD Message</h4>
+                <p style="font-size: 0.9em; font-style: italic; background: #fff; padding: 12px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                    "Good day <strong>{Agent Name}</strong>, here is your QA Bonus Report Card for this week:<br><br>
+                    📄 <u>[PDF Link]</u><br><br>
+                    For any questions contact your supervisor."
+                </p>
+                <p style="font-size: 0.85em; margin-top: 10px;">Sent to the <strong>agent's real email</strong>.</p>
+            </div>
+            <div style="flex: 1; min-width: 280px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; border-top: 4px solid #ECC94B;">
+                <h4 style="margin-top: 0;">🟡 SANDBOX Message</h4>
+                <p style="font-size: 0.9em; font-style: italic; background: #fff; padding: 12px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                    "<em>[SANDBOX — To: {Agent Name} ({email})]</em><br><br>
+                    Good day <strong>{Agent Name}</strong>, here is your QA Bonus Report Card...<br><br>
+                    📄 <u>[PDF Link]</u>"
+                </p>
+                <p style="font-size: 0.85em; margin-top: 10px;">Sent to the <strong>test email</strong> only.</p>
+            </div>
+        </div>
+
+        <h3>2.3 Throttling &amp; Rate Limits</h3>
+        <p>The system applies a <strong>1.5-second delay</strong> between each message to prevent Google Chat API rate limiting. For large batches (e.g., 30+ agents), the dispatch may take a couple of minutes to complete.</p>
+
+        <div class="success-box">
+            <strong>✅ After Dispatch:</strong> Agent labels turn from 🔵 Blue to <strong>🟢 Green 🏁</strong>. Confirmation: <em>"✅ X PDF(s) sent to [target]. Errors: Y"</em>. If any errors occurred, they are listed individually.
+        </div>
+
+        <!-- ─── SPECIAL CASES ─── -->
+        <h2>3. Special Dispatch Cases</h2>
+
+        <h3>3.1 Full Bonus Agents (⭐ Whitelist / SP Tier)</h3>
+        <p>Full Bonus agents <strong>skip the 🔵 step</strong> — they go directly from 🟣 to 🟢. When you run Chat Dispatch, these agents are included alongside the 🔵 agents.</p>
+
+        <h3>3.2 Suspended Agents (🚫)</h3>
+        <p>Suspended agents still receive a Chat dispatch. Instead of a Report Card, the message contains a link to their <strong>Suspension Banner</strong> (PNG).</p>
+
+        <h3>3.3 Error Handling</h3>
+        <ul>
+            <li>If the agent's email cannot be resolved, the dispatch for that agent fails and is reported in the summary.</li>
+            <li>If Google Chat API returns an error, the system logs it and continues with the remaining agents.</li>
+            <li>Failed agents can be retried by running Chat Dispatch again — only unsent agents are processed.</li>
+        </ul>
+
+        <div class="alert-box">
+            <strong>⚠️ Link Unfurling:</strong> For the PDF link to show a preview in Google Chat, the Drive file must have <strong>"Anyone with the link"</strong> permission. The app sets this automatically when uploading — no manual action needed.
+        </div>
+
+        <!-- ─── NAV ─── -->
+        <div class="nav-buttons">
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-2-config-whitelist?authuser=0" target="_parent" class="nav-btn nav-btn-prev">
+                ← <span>
+                    <span class="nav-label">Previous</span>
+                    Penalties, Whitelist &amp; SP Tier
+                </span>
+            </a>
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-4-re-grade-function?authuser=0" target="_parent" class="nav-btn nav-btn-next">
+                <span>
+                    <span class="nav-label">Next</span>
+                    Re-grade, Ledger &amp; Cleanup →
+                </span>
+            </a>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

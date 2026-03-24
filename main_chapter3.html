@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3 — Extra Information</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy:       #0F1E35;
+            --navy-mid:   #1A365D;
+            --navy-light: #243E6C;
+            --gold:       #D4AF37;
+            --gold-pale:  #F0D878;
+            --slate:      #8A9BB5;
+            --white:      #F7F9FC;
+            --surface:    rgba(255,255,255,0.04);
+            --border:     rgba(212,175,55,0.18);
+            --radius:     12px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            min-height: 100vh;
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 10% 0%, rgba(26,54,93,0.8) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 90% 100%, rgba(212,175,55,0.07) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed; top: 0; right: 0; z-index: 0;
+            width: 1px; height: 100vh;
+            background: linear-gradient(to bottom, var(--gold) 0%, transparent 35%);
+            opacity: 0.25;
+        }
+
+        .wrapper {
+            position: relative; z-index: 1;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 60px 40px 120px;
+        }
+
+        .page-header {
+            margin-bottom: 50px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .breadcrumb {
+            font-size: 0.78em; font-weight: 500; color: var(--slate); margin-bottom: 16px;
+        }
+        .breadcrumb a { color: var(--gold); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb .sep { margin: 0 8px; opacity: 0.5; }
+
+        .chapter-badge {
+            display: inline-block;
+            font-family: 'DM Serif Display', serif;
+            font-size: 0.78em; color: var(--gold); letter-spacing: 0.08em;
+            background: rgba(212,175,55,0.08); border: 1px solid var(--border);
+            padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+        }
+
+        .page-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2em, 4.5vw, 2.8em); line-height: 1.15;
+            color: var(--white); margin-bottom: 16px;
+        }
+        .page-title em { font-style: italic; color: var(--gold-pale); }
+
+        .page-desc {
+            font-size: 1.05em; font-weight: 300; color: var(--slate);
+            max-width: 620px; line-height: 1.65;
+        }
+
+        .divider {
+            width: 100%; height: 1px;
+            background: linear-gradient(to right, var(--gold) 0%, transparent 50%);
+            opacity: 0.25; margin: 0 0 48px;
+        }
+
+        .scope-box {
+            background: rgba(212,175,55,0.06); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 20px 24px; margin-bottom: 48px;
+            animation: fadeUp 0.6s ease 0.1s both;
+        }
+        .scope-box h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1em; color: var(--gold); margin-bottom: 10px;
+        }
+        .scope-box p { font-size: 0.95em; color: var(--slate); line-height: 1.6; margin: 0; }
+
+        /* ── HIGHLIGHTS ── */
+        .highlights {
+            display: flex; gap: 14px; flex-wrap: wrap;
+            margin-bottom: 48px;
+            animation: fadeUp 0.6s ease 0.12s both;
+        }
+        .highlight-item {
+            flex: 1; min-width: 180px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 16px 18px; text-align: center;
+        }
+        .highlight-item .hi-icon { font-size: 1.8em; display: block; margin-bottom: 6px; }
+        .highlight-item .hi-label { font-size: 0.82em; font-weight: 600; color: var(--white); }
+        .highlight-item .hi-desc { font-size: 0.72em; color: var(--slate); margin-top: 2px; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+            animation: fadeUp 0.6s ease 0.15s both;
+        }
+
+        .page-card {
+            position: relative; background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 22px 20px 20px;
+            text-decoration: none; color: inherit;
+            display: flex; flex-direction: column; gap: 10px;
+            transition: transform 0.2s, border-color 0.2s, background 0.2s;
+            overflow: hidden;
+        }
+        .page-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(to right, var(--gold), transparent);
+            opacity: 0; transition: opacity 0.2s;
+        }
+        .page-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(212,175,55,0.45);
+            background: rgba(255,255,255,0.06);
+        }
+        .page-card:hover::before { opacity: 1; }
+
+        .card-icon { font-size: 1.6em; line-height: 1; }
+        .card-body { flex: 1; }
+        .card-label { font-size: 0.68em; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+        .card-title { font-family: 'DM Serif Display', serif; font-size: 1.08em; color: var(--white); line-height: 1.3; }
+        .card-desc { font-size: 0.82em; color: var(--slate); font-weight: 300; margin-top: 6px; line-height: 1.5; }
+        .card-arrow { font-size: 0.9em; color: var(--gold); opacity: 0; transition: opacity 0.2s, transform 0.2s; align-self: flex-end; }
+        .page-card:hover .card-arrow { opacity: 1; transform: translateX(3px); }
+
+        .chapter-progress {
+            display: flex; align-items: center; gap: 12px; margin-top: 24px;
+            animation: fadeUp 0.6s ease 0.2s both;
+        }
+        .progress-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(to right, var(--gold), var(--gold-pale)); }
+        .progress-label { font-size: 0.72em; color: var(--slate); font-weight: 500; white-space: nowrap; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            margin-top: 56px; padding: 10px 20px;
+            font-size: 0.9em; font-weight: 600;
+            color: var(--gold); text-decoration: none;
+            border: 1px solid var(--border); border-radius: 6px;
+            transition: background 0.2s, border-color 0.2s;
+            animation: fadeUp 0.6s ease 0.25s both;
+        }
+        .back-link:hover { background: rgba(212,175,55,0.08); border-color: rgba(212,175,55,0.4); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .wrapper { padding: 40px 20px 80px; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .highlights { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <header class="page-header">
+        <nav class="breadcrumb">
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/home?authuser=0">Home</a>
+            <span class="sep">›</span>
+            Chapter 03
+        </nav>
+        <span class="chapter-badge">Chapter 03</span>
+        <h1 class="page-title">Extra <em>Information</em></h1>
+        <p class="page-desc">System architecture, backend references, audit history, and quick-reference material for the QA Bonus Grading App.</p>
+    </header>
+
+    <div class="divider"></div>
+
+    <div class="scope-box">
+        <h3>What's in This Chapter</h3>
+        <p>This section provides background knowledge about how the app works under the hood. It's useful for understanding where data lives, how weeks are managed, and what to reference when troubleshooting. Both QA agents and Administrators will find this material helpful.</p>
+    </div>
+
+    <!-- ── Service highlights ── -->
+    <div class="highlights">
+        <div class="highlight-item">
+            <span class="hi-icon">📊</span>
+            <span class="hi-label">Google Sheets</span>
+            <span class="hi-desc">RAW_DB — all state</span>
+        </div>
+        <div class="highlight-item">
+            <span class="hi-icon">🔍</span>
+            <span class="hi-label">BigQuery</span>
+            <span class="hi-desc">Call logs</span>
+        </div>
+        <div class="highlight-item">
+            <span class="hi-icon">📁</span>
+            <span class="hi-label">Google Drive</span>
+            <span class="hi-desc">PDF storage</span>
+        </div>
+        <div class="highlight-item">
+            <span class="hi-icon">💬</span>
+            <span class="hi-label">Google Chat</span>
+            <span class="hi-desc">DM dispatch</span>
+        </div>
+    </div>
+
+    <div class="cards-grid">
+
+        <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/3-extra-information/3-1-architecture?authuser=0" target="_parent" class="page-card">
+            <div class="card-icon">🗺️</div>
+            <div class="card-body">
+                <p class="card-label">Page 1 of 2</p>
+                <h3 class="card-title">System Architecture</h3>
+                <p class="card-desc">How app.py, BigQuery, Sheets (RAW_DB), Drive, and Chat connect end-to-end. Includes Drive folder structure and office prefix mapping.</p>
+            </div>
+            <span class="card-arrow">→</span>
+        </a>
+
+        <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/3-extra-information/3-2-history-reference?authuser=0" target="_parent" class="page-card">
+            <div class="card-icon">📚</div>
+            <div class="card-body">
+                <p class="card-label">Page 2 of 2</p>
+                <h3 class="card-title">Audit History &amp; Reference</h3>
+                <p class="card-desc">Week slot format, auto-archival process, History panel, output types, semaphore legend, and concurrency notes.</p>
+            </div>
+            <span class="card-arrow">→</span>
+        </a>
+
+    </div>
+
+    <div class="chapter-progress">
+        <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+        <span class="progress-label">2 / 2 pages complete</span>
+    </div>
+
+    <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/home?authuser=0" class="back-link">← Back to Home</a>
+
+</div>
+</body>
+</html>

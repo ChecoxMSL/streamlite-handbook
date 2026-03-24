@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extra Information — 2. Audit History &amp; Reference</title>
+    <style>
+        :root {
+            --primary-brand-color: #1A365D;
+            --accent-color: #D4AF37;
+            --text-main: #333333;
+            --background-body: #FFFFFF;
+        }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main); background-color: var(--background-body);
+        }
+
+        .scroll-wrapper {
+            width: 100%; height: 100vh; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+            padding: 30px 40px 100px 40px; box-sizing: border-box;
+        }
+
+        .main-content { max-width: 900px; margin: 0 auto; }
+
+        h1 { color: var(--primary-brand-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; margin-top: 0; }
+        h2 { color: var(--primary-brand-color); margin-top: 50px; border-left: 4px solid var(--accent-color); padding-left: 12px; font-size: 1.8em; }
+        h3 { color: #4A5568; margin-top: 40px; }
+        h4 { color: var(--primary-brand-color); margin-bottom: 5px; font-size: 1.2em; }
+        p, li { font-size: 1.1em; color: #4A5568; }
+
+        img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #E2E8F0; }
+
+        .alert-box { background-color: #FFF3CD; border-left: 4px solid #F6E05E; color: #744210; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .success-box { background-color: #C6F6D5; border-left: 4px solid #48BB78; color: #22543D; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .tip-box { background-color: #EBF8FF; border-left: 4px solid #4299E1; color: #2B6CB0; padding: 15px; margin: 15px 0; border-radius: 6px; font-size: 1em; }
+
+        code { background: #EDF2F7; padding: 2px 6px; border-radius: 3px; font-size: 0.95em; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: var(--primary-brand-color); color: #fff; padding: 10px 14px; text-align: left; font-size: 1em; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 1em; color: #4A5568; }
+        tr:last-child td { border-bottom: none; }
+
+        .page-indicator { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+        .page-indicator span { font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #A0AEC0; }
+        .page-indicator .page-badge { background: var(--accent-color); color: var(--primary-brand-color); padding: 3px 10px; border-radius: 20px; font-size: 0.78em; font-weight: 700; letter-spacing: 0.05em; }
+
+        .nav-buttons { display: flex; justify-content: flex-start; align-items: center; gap: 12px; margin-top: 60px; padding-top: 30px; border-top: 2px solid #EDF2F7; }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 6px; font-weight: 700; font-size: 1em; text-decoration: none; transition: all 0.2s; border: 2px solid transparent; }
+        .nav-btn-prev { background-color: #fff; color: var(--primary-brand-color); border-color: var(--primary-brand-color); }
+        .nav-btn-prev:hover { background-color: #EBF0F8; }
+        .nav-label { font-size: 0.8em; font-weight: 400; opacity: 0.75; display: block; }
+
+        /* Timeline style */
+        .timeline {
+            position: relative; padding-left: 30px; margin: 20px 0;
+            border-left: 3px solid var(--accent-color);
+        }
+        .timeline-step {
+            position: relative; margin-bottom: 24px; padding-left: 16px;
+        }
+        .timeline-step::before {
+            content: '';
+            position: absolute; left: -38px; top: 6px;
+            width: 12px; height: 12px;
+            background: var(--accent-color); border-radius: 50%;
+            border: 3px solid #fff; box-shadow: 0 0 0 2px var(--accent-color);
+        }
+        .timeline-step h4 { margin-top: 0; margin-bottom: 4px; }
+        .timeline-step p { margin: 0; font-size: 1em; }
+
+        /* Output types grid */
+        .output-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px; margin: 24px 0;
+        }
+        .output-card {
+            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;
+            padding: 20px; border-top: 4px solid var(--accent-color);
+        }
+        .output-card.card-red { border-top-color: #E53E3E; }
+        .output-card.card-gold { border-top-color: #D4AF37; }
+        .output-card.card-navy { border-top-color: #1A365D; }
+        .output-card h4 { margin-top: 0; margin-bottom: 8px; }
+        .output-card p { font-size: 0.95em; margin: 0; }
+    </style>
+</head>
+<body>
+<div class="scroll-wrapper">
+    <main class="main-content">
+
+        <div class="page-indicator">
+            <span class="page-badge">Page 2 of 2</span>
+            <span>Extra Information</span>
+        </div>
+
+        <h1>📚 Audit History &amp; Reference</h1>
+        <p>This page covers the week slot system, how audit records are automatically archived, and provides quick-reference tables for common operations.</p>
+
+        <!-- ─── WEEK SLOTS ─── -->
+        <h2>1. Week Slot Format</h2>
+
+        <p>Every audit record is tied to a <strong>week slot</strong> — a fixed Monday-to-Sunday date range in <code>MM/DD-MM/DD</code> format. This ensures records are permanently tied to the production week they belong to.</p>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 20px 0;">
+            <h4 style="margin-top: 0;">Example Week Slots</h4>
+            <table style="margin: 0;">
+                <tr><th>Slot</th><th>Meaning</th></tr>
+                <tr><td><code>03/09-03/15</code></td><td>Previous week (Mon Mar 9 → Sun Mar 15)</td></tr>
+                <tr><td><code>03/16-03/22</code></td><td>Current week (Mon Mar 16 → Sun Mar 22)</td></tr>
+                <tr><td><code>03/23-03/29</code></td><td>Next week (Mon Mar 23 → Sun Mar 29)</td></tr>
+            </table>
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Automatic Computation:</strong> Week slots are computed automatically by the app. You never need to enter dates manually. The system always uses the Monday-Sunday range regardless of which day the grading is performed.
+        </div>
+
+        <!-- ─── AUTO-ARCHIVAL ─── -->
+        <h2>2. Automatic Archival Process</h2>
+
+        <p>When a new session starts, the app checks for old week slots in the <code>Audit_Ledger</code>. Slots older than "Last Week" are automatically archived. This process is <strong>completely silent</strong> — no notification is shown.</p>
+
+        <div class="timeline">
+            <div class="timeline-step">
+                <h4>1. Session Starts</h4>
+                <p>The function <code>auto_archive_old_slots()</code> runs silently on every session init.</p>
+            </div>
+            <div class="timeline-step">
+                <h4>2. Old Slots Identified</h4>
+                <p>Any week slot older than "Last Week" is marked for archival. Current Week and Last Week remain active.</p>
+            </div>
+            <div class="timeline-step">
+                <h4>3. Records Written to History</h4>
+                <p>All agent records from old slots are appended to <code>Audit_History</code> (permanent, never edited).</p>
+            </div>
+            <div class="timeline-step">
+                <h4>4. Old Records Removed from Ledger</h4>
+                <p>Archived rows are deleted from <code>Audit_Ledger</code>, leaving only current and last week data.</p>
+            </div>
+        </div>
+
+        <h3>2.1 History Panel — Browsing Past Weeks</h3>
+        <p>Any QA user can browse archived weeks using the <strong>📚 History</strong> tab in the main app area. The History panel is <strong>read-only</strong> — no data can be modified.</p>
+
+        <p>History panel columns:</p>
+        <table>
+            <tr>
+                <th>Column</th>
+                <th>Content</th>
+            </tr>
+            <tr><td>Type</td><td>Agent type indicator (Normal, ⭐ Full Bonus, 🚫 Suspended)</td></tr>
+            <tr><td>Status</td><td>Final status (🟢 Sent, 🔵 Synced, 🟣 Audited)</td></tr>
+            <tr><td>Agent</td><td>Agent name</td></tr>
+            <tr><td>Created by</td><td>QA user who performed the grading</td></tr>
+            <tr><td>Stars</td><td>Final star rating</td></tr>
+            <tr><td>PDF</td><td>Link to the Drive PDF</td></tr>
+            <tr><td>HR</td><td>Whether synced to HR Spreadsheet</td></tr>
+            <tr><td>Chat</td><td>Whether dispatched via Google Chat</td></tr>
+        </table>
+
+        <img src="https://drive.google.com/thumbnail?id=1eAW73fJfEp6Tg1wDmRtAPhgd6lCz6fv4&sz=w1000" alt="Audit History Panel">
+
+        <div class="alert-box">
+            <strong>⚠️ "Created by" Column:</strong> Records archived before v5.4.1 show "—" in the Created by column, as this field was not tracked in earlier versions.
+        </div>
+
+        <!-- ─── OUTPUT TYPES REFERENCE ─── -->
+        <h2>3. Output Types — Quick Reference</h2>
+
+        <div class="output-grid">
+            <div class="output-card card-navy">
+                <h4>📄 QA Bonus Report Card</h4>
+                <p><strong>Trigger:</strong> Agent scores &lt; 5★<br>
+                <strong>Format:</strong> PDF — Portrait A4, dark theme<br>
+                Includes penalty breakdown, qualitative feedback, and recording links.</p>
+            </div>
+            <div class="output-card card-gold">
+                <h4>🏆 Full Bonus Certificate</h4>
+                <p><strong>Trigger:</strong> 5★ score, Whitelist, or SP Tier (45+ leads)<br>
+                <strong>Format:</strong> PDF — Landscape A4<br>
+                Branded certificate with company logo background.</p>
+            </div>
+            <div class="output-card card-red">
+                <h4>🛑 Suspension Banner</h4>
+                <p><strong>Trigger:</strong> Agent marked Suspended 🚫<br>
+                <strong>Format:</strong> PNG — 800×340px, dark theme<br>
+                Generated via Pillow. Takes priority over all other outputs.</p>
+            </div>
+        </div>
+
+        <!-- ─── SEMAPHORES REFERENCE ─── -->
+        <h2>4. Semaphore Reference — Full Legend</h2>
+
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+            <div style="flex: 1; min-width: 300px; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <h4 style="margin-top: 0;">📈 Progress Colors</h4>
+                <table style="margin: 0;">
+                    <tr><th style="width: 50px;">Icon</th><th>Meaning</th><th>Action By</th></tr>
+                    <tr><td>⚪</td><td>Pending — not yet graded</td><td>—</td></tr>
+                    <tr><td>🟣</td><td>PDF generated &amp; uploaded</td><td>QA Agent</td></tr>
+                    <tr><td>🔵</td><td>Synced to HR Spreadsheet</td><td>Admin</td></tr>
+                    <tr><td>🟢</td><td>Sent via Google Chat</td><td>Admin</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1; min-width: 300px; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <h4 style="margin-top: 0;">👤 Agent Type Icons</h4>
+                <table style="margin: 0;">
+                    <tr><th style="width: 50px;">Icon</th><th>Meaning</th></tr>
+                    <tr><td>⭐</td><td>Full Bonus (Whitelist or SP Tier 45+ leads)</td></tr>
+                    <tr><td>🚫</td><td>Suspended (automatic disqualification)</td></tr>
+                    <tr><td>✍️</td><td>Has PDF generated</td></tr>
+                    <tr><td>📊</td><td>Synced to HR</td></tr>
+                    <tr><td>🏁</td><td>Sent via Chat (final)</td></tr>
+                    <tr><td>🎁</td><td>Full Bonus granted</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- ─── CONCURRENCY ─── -->
+        <h2>5. Concurrency &amp; Multi-User Access</h2>
+
+        <p>The app supports <strong>up to 5 QA agents</strong> working simultaneously. Each QA agent is typically assigned a different set of agents to grade, so conflicts are rare.</p>
+
+        <ul>
+            <li>The ledger uses a <strong>last-write-wins</strong> strategy for same-agent edits.</li>
+            <li>Since QA agents work on different agents, concurrent conflicts are unlikely.</li>
+            <li>The <strong>environment toggle</strong> is global — switching affects everyone immediately.</li>
+        </ul>
+
+        <div class="alert-box">
+            <strong>⚠️ Coordinate Before Switching:</strong> If you need to toggle the environment, make sure no other QA agent is actively grading. The switch is instant and affects all sessions.
+        </div>
+
+        <!-- ─── NAV ─── -->
+        <div class="nav-buttons">
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/3-extra-information/3-1-architecture?authuser=0" target="_parent" class="nav-btn nav-btn-prev">
+                ← <span>
+                    <span class="nav-label">Previous</span>
+                    System Architecture
+                </span>
+            </a>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

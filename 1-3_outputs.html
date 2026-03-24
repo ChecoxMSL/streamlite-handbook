@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Agent Guide — 3. Grading Outputs</title>
+    <style>
+        :root {
+            --primary-brand-color: #1A365D;
+            --accent-color: #D4AF37;
+            --text-main: #333333;
+            --background-body: #FFFFFF;
+        }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main); background-color: var(--background-body);
+        }
+
+        .scroll-wrapper {
+            width: 100%; height: 100vh; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+            padding: 30px 40px 100px 40px; box-sizing: border-box;
+        }
+
+        .main-content {
+            max-width: 900px; margin: 0 auto;
+        }
+
+        h1 { color: var(--primary-brand-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; margin-top: 0; }
+        h2 { color: var(--primary-brand-color); margin-top: 50px; border-left: 4px solid var(--accent-color); padding-left: 12px; font-size: 1.8em; }
+        h3 { color: #4A5568; margin-top: 40px; }
+        h4 { color: var(--primary-brand-color); margin-bottom: 5px; font-size: 1.2em; }
+        p, li { font-size: 1.1em; color: #4A5568; }
+
+        img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #E2E8F0; }
+
+        .alert-box { background-color: #FFF3CD; border-left: 4px solid #F6E05E; color: #744210; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .success-box { background-color: #C6F6D5; border-left: 4px solid #48BB78; color: #22543D; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .tip-box { background-color: #EBF8FF; border-left: 4px solid #4299E1; color: #2B6CB0; padding: 15px; margin: 15px 0; border-radius: 6px; font-size: 1em; }
+
+        .btn-mockup { background-color: var(--primary-brand-color); color: white; padding: 6px 12px; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 0.9em; }
+
+        /* Page indicator */
+        .page-indicator {
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 28px;
+        }
+        .page-indicator .page-badge {
+            background: var(--accent-color); color: var(--primary-brand-color);
+            padding: 3px 10px; border-radius: 20px; font-size: 0.78em;
+            font-weight: 700; letter-spacing: 0.05em;
+        }
+        .page-indicator > span:last-child {
+            font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em;
+            text-transform: uppercase; color: #A0AEC0;
+        }
+
+        /* Nav buttons */
+        .nav-buttons {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 12px; margin-top: 60px; padding-top: 30px;
+            border-top: 2px solid #EDF2F7;
+        }
+        .nav-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px; border-radius: 6px; font-weight: 700;
+            font-size: 1em; text-decoration: none; transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .nav-btn-next {
+            background-color: var(--primary-brand-color); color: #fff;
+            border-color: var(--primary-brand-color);
+        }
+        .nav-btn-next:hover { background-color: #2A4A7F; border-color: #2A4A7F; }
+        .nav-btn-prev {
+            background-color: #fff; color: var(--primary-brand-color);
+            border-color: var(--primary-brand-color);
+        }
+        .nav-btn-prev:hover { background-color: #EBF0F8; }
+        .nav-label { font-size: 0.8em; font-weight: 400; opacity: 0.75; display: block; }
+
+        /* Output type cards */
+        .output-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .output-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            border-top: 4px solid var(--accent-color);
+        }
+        .output-card.card-red { border-top-color: #E53E3E; }
+        .output-card.card-gold { border-top-color: #D4AF37; }
+        .output-card.card-navy { border-top-color: #1A365D; }
+        .output-card h4 { margin-top: 0; margin-bottom: 8px; }
+        .output-card p { font-size: 0.95em; margin: 0; }
+        .output-card .trigger-tag {
+            display: inline-block; background: #EDF2F7; color: #4A5568;
+            border-radius: 4px; padding: 2px 8px; font-size: 0.8em;
+            font-weight: 600; margin-bottom: 10px;
+        }
+
+        /* Decision table */
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: var(--primary-brand-color); color: #fff; padding: 10px 14px; text-align: left; font-size: 1em; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 1em; color: #4A5568; }
+        tr:last-child td { border-bottom: none; }
+    </style>
+</head>
+<body>
+<div class="scroll-wrapper">
+    <main class="main-content">
+
+        <div class="page-indicator">
+            <span class="page-badge">Page 3 of 4</span>
+            <span>QA Agent Guide</span>
+        </div>
+
+        <h1>📄 Understanding Grading Outputs</h1>
+        <p>When you click <span class="btn-mockup">Generate</span>, the system evaluates the agent's score and type, then <strong>automatically selects the correct output format</strong>. You don't choose the format manually — the logic is handled for you.</p>
+
+        <!-- ─── QUICK REFERENCE ─── -->
+        <h2>2.3 Output Format Decision Table</h2>
+
+        <p>The system applies this logic in order every time you generate a result:</p>
+
+        <table>
+            <tr>
+                <th>Condition</th>
+                <th>Output Generated</th>
+                <th>Format</th>
+            </tr>
+            <tr>
+                <td>Agent is marked <strong>Suspended 🚫</strong></td>
+                <td>🛑 Suspension Banner</td>
+                <td>PNG — 800×340px, dark theme</td>
+            </tr>
+            <tr>
+                <td>Agent scores <strong>5 ★</strong> (no deductions)</td>
+                <td>🏆 Full Bonus Certificate</td>
+                <td>PDF — Landscape A4</td>
+            </tr>
+            <tr>
+                <td>Agent is on the <strong>Admin Whitelist</strong></td>
+                <td>🏆 Full Bonus Certificate</td>
+                <td>PDF — Landscape A4</td>
+            </tr>
+            <tr>
+                <td>Agent qualifies for <strong>SP Comercial Tier</strong> (45+ leads)</td>
+                <td>🏆 Full Bonus Certificate</td>
+                <td>PDF — Landscape A4</td>
+            </tr>
+            <tr>
+                <td>Agent scores <strong>&lt; 5 ★</strong> and is not on any special list</td>
+                <td>📄 Standard Report Card</td>
+                <td>PDF — Portrait A4, dark theme</td>
+            </tr>
+        </table>
+
+        <div class="tip-box">
+            <strong>💡 Note:</strong> Suspension takes priority over everything else. If an agent is flagged as 🚫 Suspended, a Banner is always generated — regardless of their lead count or whitelist status.
+        </div>
+
+        <!-- ─── OUTPUT CARDS ─── -->
+        <div class="output-grid">
+            <div class="output-card card-navy">
+                <span class="trigger-tag">< 5 ★ — Standard</span>
+                <h4>📄 QA Bonus Report Card</h4>
+                <p>Portrait A4 PDF with dark theme. Includes call scores, penalty breakdown, qualitative feedback, and the recording link table with gold play icons.</p>
+            </div>
+            <div class="output-card card-gold">
+                <span class="trigger-tag">5★ / Whitelist / SP Tier</span>
+                <h4>🏆 Full Bonus Certificate</h4>
+                <p>Landscape A4 PDF with the branded certificate background. Awarded automatically — no special action required from you.</p>
+            </div>
+            <div class="output-card card-red">
+                <span class="trigger-tag">Suspended 🚫</span>
+                <h4>🛑 Suspension Banner</h4>
+                <p>Dark-theme PNG (800×340px). Generated using Pillow — no PDF involved. Still gets uploaded to Drive and dispatched by the Administrator.</p>
+            </div>
+        </div>
+
+        <!-- ─── OUTPUT SCREENSHOTS ─── -->
+        <h3>📄 Standard Report Card (PDF)</h3>
+        <p>Used for agents scoring less than 5 stars. Contains the full penalty breakdown so the agent can see exactly what was deducted and why.</p>
+        <img src="https://drive.google.com/thumbnail?id=1ZMMMLM5RCqlPImymxkz62_exPIMhNJ4v&sz=w1000" alt="Report Card PDF">
+
+        <h3>🏆 Full Bonus Certificate (PDF)</h3>
+        <p>Awarded when an agent achieves a perfect score (5★), appears on the Administrator's whitelist, or qualifies under SP Comercial Tier (45+ leads). The system identifies all three cases automatically.</p>
+        <img src="https://drive.google.com/thumbnail?id=1bUFEYFNhPCO7GV2bCekqLWVEhe9IpPKi&sz=w1000" alt="Full Bonus Certificate PDF">
+
+        <h3>🛑 Suspension Banner (PNG)</h3>
+        <p>Generated for agents marked Suspended. The banner is uploaded to the same Google Drive folder structure as other outputs and is dispatched by the Administrator via Google Chat.</p>
+        <img src="https://drive.google.com/thumbnail?id=1ToYvraf6a5AGqxFZfZ-8yPehBz4xaQJ7&sz=w1000" alt="Suspension Banner PNG">
+
+        <div class="alert-box">
+            <strong>📁 Where do the files go?</strong> All generated files are automatically uploaded to the correct Google Drive subfolder by office and week. You do not need to upload anything manually. See the next page for folder structure details.
+        </div>
+
+        <!-- ─── NAV ─── -->
+        <div class="nav-buttons">
+
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide/1-2-the-grading-process?authuser=0" target="_parent" class="nav-btn nav-btn-prev">
+                ← <span>
+                    <span class="nav-label">Previous</span>
+                    Grading Workflow
+                </span>
+            </a>
+
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide/1-4-file-management?authuser=0" target="_parent" class="nav-btn nav-btn-next">
+                <span>
+                    <span class="nav-label">Next</span>
+                    Handoff &amp; Drive →
+                </span>
+            </a>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Agent Guide — 4. Drive &amp; Handoff</title>
+    <style>
+        :root {
+            --primary-brand-color: #1A365D;
+            --accent-color: #D4AF37;
+            --text-main: #333333;
+            --background-body: #FFFFFF;
+        }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main); background-color: var(--background-body);
+        }
+
+        .scroll-wrapper {
+            width: 100%; height: 100vh; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+            padding: 30px 40px 100px 40px; box-sizing: border-box;
+        }
+
+        .main-content {
+            max-width: 900px; margin: 0 auto;
+        }
+
+        h1 { color: var(--primary-brand-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; margin-top: 0; }
+        h2 { color: var(--primary-brand-color); margin-top: 50px; border-left: 4px solid var(--accent-color); padding-left: 12px; font-size: 1.8em; }
+        h3 { color: #4A5568; margin-top: 40px; }
+        h4 { color: var(--primary-brand-color); margin-bottom: 5px; font-size: 1.2em; }
+        p, li { font-size: 1.1em; color: #4A5568; }
+
+        img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #E2E8F0; }
+
+        .alert-box { background-color: #FFF3CD; border-left: 4px solid #F6E05E; color: #744210; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .success-box { background-color: #C6F6D5; border-left: 4px solid #48BB78; color: #22543D; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .tip-box { background-color: #EBF8FF; border-left: 4px solid #4299E1; color: #2B6CB0; padding: 15px; margin: 15px 0; border-radius: 6px; font-size: 1em; }
+
+        .btn-drive {
+            display: inline-block; background-color: #1FA463; color: white; text-decoration: none;
+            padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 1.1em;
+            margin: 15px 0 5px 0; transition: background-color 0.3s;
+        }
+        .btn-drive:hover { background-color: #17834E; }
+
+        .tree-diagram {
+            background-color: #1A202C; color: #A0AEC0; padding: 20px; border-radius: 6px;
+            font-family: monospace; font-size: 1.1em; line-height: 1.5; margin: 20px 0;
+        }
+        .tree-folder { color: #63B3ED; font-weight: bold; }
+
+        /* Page indicator */
+        .page-indicator {
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 28px;
+        }
+        .page-indicator .page-badge {
+            background: var(--accent-color); color: var(--primary-brand-color);
+            padding: 3px 10px; border-radius: 20px; font-size: 0.78em;
+            font-weight: 700; letter-spacing: 0.05em;
+        }
+        .page-indicator > span:last-child {
+            font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em;
+            text-transform: uppercase; color: #A0AEC0;
+        }
+
+        /* Nav buttons */
+        .nav-buttons {
+            display: flex; justify-content: flex-start; align-items: center;
+            gap: 12px; margin-top: 60px; padding-top: 30px;
+            border-top: 2px solid #EDF2F7;
+        }
+        .nav-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px; border-radius: 6px; font-weight: 700;
+            font-size: 1em; text-decoration: none; transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .nav-btn-prev {
+            background-color: #fff; color: var(--primary-brand-color);
+            border-color: var(--primary-brand-color);
+        }
+        .nav-btn-prev:hover { background-color: #EBF0F8; }
+        .nav-label { font-size: 0.8em; font-weight: 400; opacity: 0.75; display: block; }
+
+        /* Prefix table */
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: var(--primary-brand-color); color: #fff; padding: 10px 14px; text-align: left; font-size: 1em; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 1em; color: #4A5568; }
+        tr:last-child td { border-bottom: none; }
+        code { background: #EDF2F7; padding: 2px 6px; border-radius: 3px; font-size: 0.95em; }
+
+        /* Completion checklist */
+        .checklist { list-style: none; padding: 0; margin: 16px 0; }
+        .checklist li {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 10px 0; border-bottom: 1px solid #EDF2F7; font-size: 1.05em; color: #4A5568;
+        }
+        .checklist li:last-child { border-bottom: none; }
+        .check-icon { font-size: 1.2em; flex-shrink: 0; margin-top: 1px; }
+    </style>
+</head>
+<body>
+<div class="scroll-wrapper">
+    <main class="main-content">
+
+        <div class="page-indicator">
+            <span class="page-badge">Page 4 of 4</span>
+            <span>QA Agent Guide</span>
+        </div>
+
+        <h1>📁 Drive &amp; Handoff Procedure</h1>
+        <p>All files generated by the app are uploaded automatically. Your only job is to confirm they land in the right place if needed — and to notify the Administrator once every agent is purple.</p>
+
+        <!-- ─── SECTION 3 ─── -->
+        <h2>3. Document Management</h2>
+
+        <h3>3.1 Automatic File Routing — How It Works</h3>
+        <p>When you click <strong>Generate</strong>, <code>services/drive.py</code> automatically routes the file to the correct Google Drive location based on:</p>
+        <ul>
+            <li>The <strong>agent's name prefix</strong> — determines the office subfolder.</li>
+            <li>The <strong>current week's date range</strong> — always Monday to Sunday, regardless of when during the week the PDF is generated.</li>
+        </ul>
+
+        <div class="tree-diagram">
+            📁 <span class="tree-folder">Shared Drive Folder</span><br>
+            &nbsp;└── 📁 <span class="tree-folder">Mar 16th to Mar 22nd</span> &nbsp;← Current Week (Mon–Sun)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">ARMY</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">EGYPT</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">NAYARIT</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">SP-PR</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📁 <span class="tree-folder">WEST</span>
+        </div>
+
+        <h4>Office Folder Mapping — by Agent Name Prefix</h4>
+        <table>
+            <tr>
+                <th>Agent Name Starts With</th>
+                <th>Uploads To</th>
+            </tr>
+            <tr><td><code>sp </code> &nbsp;or&nbsp; <code>pr </code></td><td>📁 SP-PR</td></tr>
+            <tr><td><code>a </code></td><td>📁 ARMY</td></tr>
+            <tr><td><code>e </code></td><td>📁 EGYPT</td></tr>
+            <tr><td><code>n </code></td><td>📁 NAYARIT</td></tr>
+            <tr><td><code>w </code></td><td>📁 WEST</td></tr>
+        </table>
+
+        <div class="tip-box">
+            <strong>💡 Verification:</strong> If you ever need to confirm a file was uploaded correctly, use the Drive link below. Files are stored permanently — there is no automatic cleanup. Only the Administrator can remove files manually.
+        </div>
+
+        <a href="https://drive.google.com/drive/u/0/folders/0AAqkhQE4c-zlUk9PVA" target="_blank" class="btn-drive">
+            📁 Open Shared Google Drive
+        </a>
+        <p style="color: #E53E3E; font-size: 0.9em; margin-top: 5px;"><em>* If access is denied, request permission from the Administrator.</em></p>
+
+        <h3>3.2 Week Slot Format</h3>
+        <p>Each audit is permanently tied to a <strong>week slot</strong> in the format <code>MM/DD–MM/DD</code>. For example:</p>
+        <ul>
+            <li><code>03/09–03/15</code> — Last Week</li>
+            <li><code>03/16–03/22</code> — Current Week</li>
+        </ul>
+        <p>When a new week starts, the app automatically archives the previous week's records to <strong>Audit History</strong>. You can browse past weeks using the <strong>📚 History</strong> tab inside the app — it's read-only and safe to explore.</p>
+
+        <!-- ─── SECTION 4 ─── -->
+        <h2>4. Handoff Procedure</h2>
+
+        <h3>4.1 Your Completion Checklist</h3>
+        <p>Before you notify the Administrator, run through this quick check:</p>
+
+        <ul class="checklist">
+            <li>
+                <span class="check-icon">🟣</span>
+                <span><strong>Every agent in your sidebar shows Purple.</strong> Scroll through the full list — don't miss anyone near the bottom.</span>
+            </li>
+            <li>
+                <span class="check-icon">📄</span>
+                <span><strong>Verify files in Drive (optional but recommended).</strong> Spot-check 1–2 agents to confirm their PDFs appear in the correct office subfolder.</span>
+            </li>
+            <li>
+                <span class="check-icon">💬</span>
+                <span><strong>Notify the Administrator.</strong> Message them directly — via Google Chat or whatever channel your team uses — to confirm the sidebar is fully purple.</span>
+            </li>
+        </ul>
+
+        <div class="success-box">
+            <h3 style="margin-top: 0; color: #22543D;">✅ 4.2 What Happens After You Notify</h3>
+            <p>Once you hand off, the Administrator takes over and completes the two remaining steps that are outside your scope:</p>
+            <ol style="margin: 0; padding-left: 1.4em;">
+                <li><strong>🔵 HR Sync</strong> — The Audit Ledger data is pushed to the HR Spreadsheet. Agent labels turn Blue.</li>
+                <li><strong>🟢 Chat Dispatch</strong> — Individual bonus results are sent to each agent via Google Chat DM. Agent labels turn Green 🏁.</li>
+            </ol>
+            <p style="margin-bottom: 0;">You will see the sidebar colors update in real time as the Administrator runs each step — no action required on your end.</p>
+        </div>
+
+        <div class="alert-box">
+            <strong>⚠️ Do Not Re-grade Without Authorization.</strong> If you realize you made an error after generating a purple label, <strong>do not attempt to grade the same agent again</strong>. Contact the Administrator — they have access to the Re-grade function in Admin Settings.
+        </div>
+
+        <!-- ─── NAV ─── -->
+        <div class="nav-buttons">
+
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide/1-3-understanding-outputs?authuser=0" target="_parent" class="nav-btn nav-btn-prev">
+                ← <span>
+                    <span class="nav-label">Previous</span>
+                    Grading Outputs
+                </span>
+            </a>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

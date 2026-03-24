@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Guide — 2. Penalties, Whitelist &amp; SP Tier</title>
+    <style>
+        :root {
+            --primary-brand-color: #1A365D;
+            --accent-color: #D4AF37;
+            --text-main: #333333;
+            --background-body: #FFFFFF;
+        }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main); background-color: var(--background-body);
+        }
+
+        .scroll-wrapper {
+            width: 100%; height: 100vh; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+            padding: 30px 40px 100px 40px; box-sizing: border-box;
+        }
+
+        .main-content { max-width: 900px; margin: 0 auto; }
+
+        h1 { color: var(--primary-brand-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; margin-top: 0; }
+        h2 { color: var(--primary-brand-color); margin-top: 50px; border-left: 4px solid var(--accent-color); padding-left: 12px; font-size: 1.8em; }
+        h3 { color: #4A5568; margin-top: 40px; }
+        h4 { color: var(--primary-brand-color); margin-bottom: 5px; font-size: 1.2em; }
+        p, li { font-size: 1.1em; color: #4A5568; }
+
+        img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #E2E8F0; }
+
+        .alert-box { background-color: #FFF3CD; border-left: 4px solid #F6E05E; color: #744210; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .success-box { background-color: #C6F6D5; border-left: 4px solid #48BB78; color: #22543D; padding: 18px; margin: 25px 0; border-radius: 6px; }
+        .tip-box { background-color: #EBF8FF; border-left: 4px solid #4299E1; color: #2B6CB0; padding: 15px; margin: 15px 0; border-radius: 6px; font-size: 1em; }
+
+        code { background: #EDF2F7; padding: 2px 6px; border-radius: 3px; font-size: 0.95em; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: var(--primary-brand-color); color: #fff; padding: 10px 14px; text-align: left; font-size: 1em; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 1em; color: #4A5568; }
+        tr:last-child td { border-bottom: none; }
+
+        .penalty-chip { display: inline-block; background: #FED7D7; color: #C53030; border-radius: 4px; padding: 1px 8px; font-size: 0.88em; font-weight: 700; }
+
+        .page-indicator { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+        .page-indicator span { font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #A0AEC0; }
+        .page-indicator .page-badge { background: var(--accent-color); color: var(--primary-brand-color); padding: 3px 10px; border-radius: 20px; font-size: 0.78em; font-weight: 700; letter-spacing: 0.05em; }
+
+        .nav-buttons { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 60px; padding-top: 30px; border-top: 2px solid #EDF2F7; }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 6px; font-weight: 700; font-size: 1em; text-decoration: none; transition: all 0.2s; border: 2px solid transparent; }
+        .nav-btn-next { background-color: var(--primary-brand-color); color: #fff; border-color: var(--primary-brand-color); }
+        .nav-btn-next:hover { background-color: #2A4A7F; border-color: #2A4A7F; }
+        .nav-btn-prev { background-color: #fff; color: var(--primary-brand-color); border-color: var(--primary-brand-color); }
+        .nav-btn-prev:hover { background-color: #EBF0F8; }
+        .nav-label { font-size: 0.8em; font-weight: 400; opacity: 0.75; display: block; }
+
+        .feature-cards { display: flex; gap: 16px; flex-wrap: wrap; margin: 24px 0; }
+        .feature-card { flex: 1; min-width: 260px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; border-top: 4px solid var(--accent-color); }
+        .feature-card h4 { margin-top: 0; margin-bottom: 8px; }
+        .feature-card p { font-size: 0.95em; margin: 0; }
+    </style>
+</head>
+<body>
+<div class="scroll-wrapper">
+    <main class="main-content">
+
+        <div class="page-indicator">
+            <span class="page-badge">Page 2 of 4</span>
+            <span>Admin Guide</span>
+        </div>
+
+        <h1>⚙️ Penalties, Whitelist &amp; SP Tier</h1>
+        <p>This page covers three configuration areas that the Administrator manages: <strong>Penalty Rules</strong>, the <strong>Full Bonus Whitelist</strong>, and <strong>SP Comercial Tier</strong> agents. All three are environment-aware — changes in SANDBOX do not affect PROD.</p>
+
+        <!-- ─── PENALTY RULES ─── -->
+        <h2>1. Edit Penalty Rules</h2>
+
+        <p>Penalty rules control how many stars are deducted when a QA agent flags infractions during grading. Rules are stored in the <code>Admin_Config</code> sheet and loaded dynamically by every QA session.</p>
+
+        <h3>1.1 How to Edit</h3>
+        <ol>
+            <li>Open <strong>⚙️ Admin Settings</strong> → expand <strong>⚖️ Edit Penalty Rules</strong>.</li>
+            <li>For each infraction category, adjust two values:
+                <ul>
+                    <li><strong>Stars Deduction</strong> — how many stars are subtracted (0.0 to 5.0, in 0.5 increments).</li>
+                    <li><strong>Evidence Needed</strong> — how many flagged calls are required before the penalty kicks in (1 to 20).</li>
+                </ul>
+            </li>
+            <li>Click <strong>💾 Save Business Rules</strong>.</li>
+        </ol>
+
+        <img src="https://drive.google.com/thumbnail?id=16VArOhO0C88Rw3h2K6m3uJgcLTxQ2x_D&sz=w1000" alt="Edit Penalty Rules Panel">
+
+        <h3>1.2 Default Penalty Reference</h3>
+
+        <table>
+            <tr>
+                <th>Infraction</th>
+                <th>Default Deduction</th>
+                <th>Default Threshold</th>
+            </tr>
+            <tr><td>Call Avoidance</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 1 flagged call</td></tr>
+            <tr><td>Wrong Disposition</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 3 flagged calls</td></tr>
+            <tr><td>Script Violation</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 3 flagged calls</td></tr>
+            <tr><td>Tone / Attitude</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 1 flagged call</td></tr>
+            <tr><td>Other</td><td><span class="penalty-chip">−1.0 ★</span></td><td>≥ 1 flagged call</td></tr>
+        </table>
+
+        <div class="tip-box">
+            <strong>💡 How It Works:</strong> For each category, if the QA agent's flagged count <strong>meets or exceeds</strong> the threshold, the deduction is applied. Below the threshold = no penalty. Changes apply immediately to <strong>new gradings only</strong> — existing audits are not retroactively affected.
+        </div>
+
+        <div class="alert-box">
+            <strong>⚠️ Real-Time Sync:</strong> Penalty rules are shared across all active QA sessions. When you save changes, every QA agent will see the updated rules immediately on their next action.
+        </div>
+
+        <!-- ─── WHITELIST ─── -->
+        <h2>2. Full Bonus Whitelist</h2>
+
+        <p>Agents on the whitelist automatically receive a <strong>5-star Full Bonus Certificate</strong> — they bypass the BigQuery call review entirely. Use this for agents who are pre-approved for full bonus regardless of their call performance.</p>
+
+        <h3>2.1 How to Manage</h3>
+        <ol>
+            <li>Open <strong>⚙️ Admin Settings</strong> → expand <strong>⭐ Full Bonus Whitelist</strong>.</li>
+            <li>Use the <strong>multiselect</strong> widget to pick agents from the pending list.</li>
+            <li>Click <strong>💾 Save Whitelist</strong>.</li>
+        </ol>
+
+        <img src="https://drive.google.com/thumbnail?id=12Rz_LPq89aEivjiRA-xU7v0Vjkpz_eVT&sz=w1000" alt="Full Bonus Whitelist Panel">
+
+        <h3>2.2 What Happens When You Save</h3>
+        <ul>
+            <li><strong>Newly added agents</strong> → marked with <code>stars: 5.0</code> and <code>full_bonus_granted: True</code>. They appear in the sidebar with ⭐ and are ready for PDF generation.</li>
+            <li><strong>Removed agents</strong> → reverted to ⚪ pending <strong>only if</strong> no PDF has been generated yet. If a PDF already exists, use <strong>Ledger &amp; Cleanup</strong> to remove the record manually.</li>
+        </ul>
+
+        <div class="alert-box">
+            <strong>⚠️ Whitelist persists across weeks.</strong> Unlike the audit ledger (which resets weekly), the whitelist stays active until you manually remove agents. Review it at the start of each grading cycle.
+        </div>
+
+        <!-- ─── SP TIER ─── -->
+        <h2>3. SP Comercial Tier</h2>
+
+        <p>Agents flagged as SP Comercial Tier eligible receive a <strong>Full Bonus Certificate</strong> if they reach the lead threshold (default: <strong>45 leads</strong>). This is independent of the whitelist — it's a performance-based qualification.</p>
+
+        <h3>3.1 How to Manage</h3>
+        <ol>
+            <li>Open <strong>⚙️ Admin Settings</strong> → expand <strong>🏆 SP Comercial Tier Agents</strong>.</li>
+            <li>Use the <strong>multiselect</strong> widget to select eligible agents.</li>
+            <li>The current lead threshold is displayed (e.g., <strong>"Lead threshold: 45 leads"</strong>).</li>
+            <li>Click <strong>💾 Save SP Tier List</strong>.</li>
+        </ol>
+
+        <img src="https://drive.google.com/thumbnail?id=1p4gUO25r8ilmPmhLkcWuV8r8pHQ9hHwZ&sz=w1000" alt="SP Comercial Tier Panel">
+
+        <div class="tip-box">
+            <strong>💡 Lead Threshold:</strong> The threshold value (default 45) is stored in the <code>App_Config</code> sheet. To change it, edit the <code>sp_tier_target</code> value directly in the RAW_DB spreadsheet — it is not editable from the sidebar.
+        </div>
+
+        <h3>3.2 How SP Tier Works at Grading Time</h3>
+        <ul>
+            <li>When a QA agent grades an SP Tier-eligible agent, the system checks if the agent's lead count ≥ threshold.</li>
+            <li>If <strong>yes</strong> → the agent receives a Full Bonus Certificate (same as whitelist), marked with ⭐ in the sidebar.</li>
+            <li>If <strong>no</strong> → the agent is graded normally (standard Report Card or Suspension Banner).</li>
+        </ul>
+
+        <!-- ─── SUMMARY CARDS ─── -->
+        <h2>Quick Reference</h2>
+
+        <div class="feature-cards">
+            <div class="feature-card">
+                <h4>⚖️ Penalty Rules</h4>
+                <p>Stored in <code>Admin_Config</code>. Real-time sync. Affects new gradings only.</p>
+            </div>
+            <div class="feature-card">
+                <h4>⭐ Whitelist</h4>
+                <p>Stored in <code>Whitelist_Config</code>. Persists across weeks. Bypasses BQ review.</p>
+            </div>
+            <div class="feature-card">
+                <h4>🏆 SP Tier</h4>
+                <p>Stored in <code>SP_Tier_Config</code>. Conditional on lead count. Threshold in <code>App_Config</code>.</p>
+            </div>
+        </div>
+
+        <!-- ─── NAV ─── -->
+        <div class="nav-buttons">
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-1-admin-access?authuser=0" target="_parent" class="nav-btn nav-btn-prev">
+                ← <span>
+                    <span class="nav-label">Previous</span>
+                    Admin Access &amp; Environment
+                </span>
+            </a>
+            <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-3-send-functions?authuser=0" target="_parent" class="nav-btn nav-btn-next">
+                <span>
+                    <span class="nav-label">Next</span>
+                    Send Functions →
+                </span>
+            </a>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+================================================================================
+  QA BONUS GRADING APP — EMPLOYEE HANDBOOK
+  Index de Paginas & URLs para Google Sites
+================================================================================
+
+Instrucciones:
+  1. Publica cada HTML en Google Sites
+  2. Copia la URL publicada y pegala en la columna "Google Sites URL"
+  3. Una vez que tengas todas las URLs, actualiza los href en los botones
+     Previous/Next de cada subpage para que la navegacion funcione en iframe
+
+================================================================================
+  HOME
+================================================================================
+
+  index.html
+  Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/home?authuser=0
+
+================================================================================
+  CHAPTER 1 — QA AGENT GUIDE
+================================================================================
+
+  Main Page:
+    main_chapter1.html
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide?authuser=0
+
+  Subpages:
+    1-1_access.html          Access & Initial Setup
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide/1-1-access-progress?authuser=0
+
+    1-2_grading.html         Grading Workflow
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide/1-2-the-grading-process?authuser=0
+
+    1-3_outputs.html         Grading Outputs
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide/1-3-understanding-outputs?authuser=0
+
+    1-4_handoff.html         Drive & Handoff
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/1-qa-agent-guide/1-4-file-management?authuser=0
+
+================================================================================
+  CHAPTER 2 — ADMIN GUIDE
+================================================================================
+
+  Main Page:
+    main_chapter2.html
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide?authuser=0
+
+  Subpages:
+    2-1_admin_access.html    Admin Access & Environment
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-1-admin-access?authuser=0
+
+    2-2_config_whitelist.html  Penalties, Whitelist & SP Tier
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-2-config-whitelist?authuser=0
+
+    2-3_send_functions.html  Send Functions (HR Sync + Chat Dispatch)
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-3-send-functions?authuser=0
+
+    2-4_regrade_cleanup.html Re-grade, Ledger & Cleanup
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-4-re-grade-function?authuser=0
+
+================================================================================
+  CHAPTER 3 — EXTRA INFORMATION
+================================================================================
+
+  Main Page:
+    main_chapter3.html
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/3-extra-information?authuser=0
+
+  Subpages:
+    3-1_architecture.html    System Architecture
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/3-extra-information/3-1-architecture?authuser=0
+
+    3-2_history_reference.html  Audit History & Reference
+    Google Sites URL: https://sites.google.com/marketingleads.com.mx/streamlite-handbook/3-extra-information/3-2-history-reference?authuser=0
+
+================================================================================
+  NAVIGATION BUTTONS — ✅ COMPLETADO
+================================================================================
+
+  Todos los href de navegacion han sido actualizados con las URLs de Google Sites.
+  Todos los subpages tienen target="_parent" para compatibilidad con iframe.
+
+  Chapter 1 (target="_parent" ✅):
+    [x] 1-1_access.html        → Next btn
+    [x] 1-2_grading.html       → Previous + Next btn
+    [x] 1-3_outputs.html       → Previous + Next btn
+    [x] 1-4_handoff.html       → Previous btn
+
+  Chapter 2 (target="_parent" ✅):
+    [x] 2-1_admin_access.html  → Next btn
+    [x] 2-2_config_whitelist   → Previous + Next btn
+    [x] 2-3_send_functions     → Previous + Next btn
+    [x] 2-4_regrade_cleanup    → Previous btn
+
+  Chapter 3 (target="_parent" ✅):
+    [x] 3-1_architecture.html  → Next btn
+    [x] 3-2_history_reference  → Previous btn
+
+  Hub & Main pages (breadcrumbs, cards, back links ✅):
+    [x] index.html             → 3 chapter cards
+    [x] main_chapter1.html     → 4 subpage cards + breadcrumb + back link
+    [x] main_chapter2.html     → 4 subpage cards + breadcrumb + back link
+    [x] main_chapter3.html     → 2 subpage cards + breadcrumb + back link
+
+================================================================================
+  ARCHIVOS LEGACY (no publicar)
+================================================================================
+
+  V1pag1.html                  Draft antiguo — no linkeado
+  Qa Agent Guide Pag1 .html    Draft antiguo — no linkeado
+  styles.css                   Vacio — no usado
+
+================================================================================
+  TOTAL: 14 paginas publicadas (1 home + 3 main + 10 subpages)
+  ESTADO: ✅ Sitio completo — assets, URLs y navegacion listos
+================================================================================
