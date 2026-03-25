@@ -172,7 +172,7 @@
             <tr><td><code>Audit_History_Sandbox</code></td><td>Isolated archive for testing</td><td>SANDBOX</td></tr>
             <tr><td><code>Admin_Config</code></td><td>Penalty rules and dispatch settings</td><td>PROD</td></tr>
             <tr><td><code>Admin_Config_Sandbox</code></td><td>Isolated penalty config for testing</td><td>SANDBOX</td></tr>
-            <tr><td><code>App_Config</code></td><td>Operational settings (SP tier target, retention, delays)</td><td>Shared</td></tr>
+            <tr><td><code>App_Config</code></td><td>Operational settings: <code>target_leads</code>, <code>sp_tier_target</code>, <code>whitelist_target_leads</code>, retention, delays, emails</td><td>Shared</td></tr>
             <tr><td><code>App_Env</code></td><td>Current environment: "prod" or "sandbox"</td><td>Shared</td></tr>
             <tr><td><code>Whitelist_Config</code></td><td>Full Bonus agent list</td><td>PROD</td></tr>
             <tr><td><code>SP_Tier_Config</code></td><td>SP Comercial Tier eligible agents</td><td>PROD</td></tr>
@@ -183,6 +183,10 @@
 
         <div class="tip-box">
             <strong>💡 Sandbox Auto-Creation:</strong> Tabs marked SANDBOX are <strong>auto-created</strong> the first time you switch to SANDBOX mode. You don't need to create them manually.
+        </div>
+
+        <div class="tip-box">
+            <strong>📋 HR Payroll (separate workbook):</strong> The <strong>HR Sync</strong> action writes to a dedicated spreadsheet — <em>Qa Bonus HR</em>, tab <strong>QA Bonus Payroll</strong> — which is separate from the RAW_DB. This file is managed by HR and is not part of the app's internal state.
         </div>
 
         <!-- ─── GOOGLE DRIVE ─── -->

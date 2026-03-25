@@ -121,7 +121,7 @@
         <!-- ─── WHITELIST ─── -->
         <h2>2. Full Bonus Whitelist</h2>
 
-        <p>Agents on the whitelist automatically receive a <strong>5-star Full Bonus Certificate</strong> — they bypass the BigQuery call review entirely. Use this for agents who are pre-approved for full bonus regardless of their call performance.</p>
+        <p>Agents on the whitelist automatically receive a <strong>5-star Full Bonus Certificate</strong> — they bypass the BigQuery call review entirely. Use this for agents who are pre-approved for full bonus based on their performance level.</p>
 
         <h3>2.1 How to Manage</h3>
         <ol>
@@ -132,9 +132,32 @@
 
         <img src="https://drive.google.com/thumbnail?id=12Rz_LPq89aEivjiRA-xU7v0Vjkpz_eVT&sz=w1000" alt="Full Bonus Whitelist Panel">
 
-        <h3>2.2 What Happens When You Save</h3>
+        <h3>2.2 Whitelist Lead Threshold (<code>whitelist_target_leads</code>)</h3>
+
+        <p>Being on the whitelist alone is not enough — the agent must also meet a <strong>minimum lead count</strong> for the week. This threshold is stored in the <code>App_Config</code> sheet under the key <code>whitelist_target_leads</code> (default: <strong>18 leads</strong>, same as the standard threshold).</p>
+
+        <table>
+            <tr>
+                <th>Condition</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td>On whitelist <strong>AND</strong> leads ≥ <code>whitelist_target_leads</code></td>
+                <td>⭐ Full Bonus Certificate — bypasses BQ review</td>
+            </tr>
+            <tr>
+                <td>On whitelist <strong>BUT</strong> leads &lt; <code>whitelist_target_leads</code></td>
+                <td>Routed to <strong>normal grading</strong> (standard QA Report Card flow)</td>
+            </tr>
+        </table>
+
+        <div class="tip-box">
+            <strong>💡 Changing the Threshold:</strong> To adjust the minimum leads required for whitelist agents, edit the <code>whitelist_target_leads</code> value directly in the <strong>App_Config</strong> tab of the RAW_DB spreadsheet. The change takes effect on the next session load — no code deploy needed.
+        </div>
+
+        <h3>2.3 What Happens When You Save</h3>
         <ul>
-            <li><strong>Newly added agents</strong> → marked with <code>stars: 5.0</code> and <code>full_bonus_granted: True</code>. They appear in the sidebar with ⭐ and are ready for PDF generation.</li>
+            <li><strong>Newly added agents</strong> (who meet the threshold) → marked with <code>stars: 5.0</code> and <code>full_bonus_granted: True</code>. They appear in the sidebar with ⭐ and are ready for PDF generation.</li>
             <li><strong>Removed agents</strong> → reverted to ⚪ pending <strong>only if</strong> no PDF has been generated yet. If a PDF already exists, use <strong>Ledger &amp; Cleanup</strong> to remove the record manually.</li>
         </ul>
 
@@ -178,7 +201,7 @@
             </div>
             <div class="feature-card">
                 <h4>⭐ Whitelist</h4>
-                <p>Stored in <code>Whitelist_Config</code>. Persists across weeks. Bypasses BQ review.</p>
+                <p>Stored in <code>Whitelist_Config</code>. Persists across weeks. Bypasses BQ review. Requires <code>whitelist_target_leads</code> (App_Config) to grant Full Bonus.</p>
             </div>
             <div class="feature-card">
                 <h4>🏆 SP Tier</h4>

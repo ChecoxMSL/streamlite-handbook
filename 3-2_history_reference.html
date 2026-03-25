@@ -168,8 +168,49 @@
             <strong>⚠️ "Created by" Column:</strong> Records archived before v5.4.1 show "—" in the Created by column, as this field was not tracked in earlier versions.
         </div>
 
+        <!-- ─── ELIGIBILITY RULES ─── -->
+        <h2>3. Agent Eligibility Rules — Quick Reference</h2>
+
+        <p>An agent must satisfy <strong>both</strong> conditions to appear in the audit queue for a given week:</p>
+
+        <table>
+            <tr>
+                <th>Rule</th>
+                <th>Data Source</th>
+                <th>Threshold</th>
+                <th>Configurable?</th>
+            </tr>
+            <tr>
+                <td><strong>Minimum Leads</strong></td>
+                <td>Own Script — Col L (Current) / Col M (Last Week)</td>
+                <td>≥ 18</td>
+                <td>Yes — <code>target_leads</code> in App_Config</td>
+            </tr>
+            <tr>
+                <td><strong>Minimum Days Worked</strong></td>
+                <td>Telemarketing Stats — Col K <code>WORKED DAYS</code><br><small>(range from Own Script cell L1 / M1)</small></td>
+                <td>≥ 3 days</td>
+                <td>No — hardcoded rule</td>
+            </tr>
+        </table>
+
+        <p>Additionally, <strong>Whitelist agents</strong> must also meet a separate configurable threshold to receive the automatic Full Bonus:</p>
+
+        <table>
+            <tr>
+                <th>Config Key</th>
+                <th>Default</th>
+                <th>Effect if Not Met</th>
+            </tr>
+            <tr>
+                <td><code>whitelist_target_leads</code></td>
+                <td>18 leads</td>
+                <td>Agent falls through to normal grading (no Full Bonus bypass)</td>
+            </tr>
+        </table>
+
         <!-- ─── OUTPUT TYPES REFERENCE ─── -->
-        <h2>3. Output Types — Quick Reference</h2>
+        <h2>4. Output Types — Quick Reference</h2>
 
         <div class="output-grid">
             <div class="output-card card-navy">
@@ -180,7 +221,7 @@
             </div>
             <div class="output-card card-gold">
                 <h4>🏆 Full Bonus Certificate</h4>
-                <p><strong>Trigger:</strong> 5★ score, Whitelist, or SP Tier (45+ leads)<br>
+                <p><strong>Trigger:</strong> 5★ score, Whitelist (+ meets <code>whitelist_target_leads</code>), or SP Tier (45+ leads)<br>
                 <strong>Format:</strong> PDF — Landscape A4<br>
                 Branded certificate with company logo background.</p>
             </div>
@@ -193,7 +234,7 @@
         </div>
 
         <!-- ─── SEMAPHORES REFERENCE ─── -->
-        <h2>4. Semaphore Reference — Full Legend</h2>
+        <h2>5. Semaphore Reference — Full Legend</h2>
 
         <div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
             <div style="flex: 1; min-width: 300px; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
@@ -221,7 +262,7 @@
         </div>
 
         <!-- ─── CONCURRENCY ─── -->
-        <h2>5. Concurrency &amp; Multi-User Access</h2>
+        <h2>6. Concurrency &amp; Multi-User Access</h2>
 
         <p>The app supports <strong>up to 5 QA agents</strong> working simultaneously. Each QA agent is typically assigned a different set of agents to grade, so conflicts are rare.</p>
 

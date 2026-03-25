@@ -116,7 +116,7 @@
         <!-- ─── STAGE 1: HR SYNC ─── -->
         <h2>1. Stage 1 — HR Spreadsheet Sync (🟣 → 🔵)</h2>
 
-        <p>This step pushes the audit results from the internal ledger to the <strong>HR Spreadsheet</strong> so the HR department has a record of each agent's bonus qualification.</p>
+        <p>This step pushes the audit results from the internal ledger to the dedicated <strong>HR Payroll spreadsheet</strong> (<em>Qa Bonus HR</em> → tab <strong>QA Bonus Payroll</strong>) so the HR department has a record of each agent's bonus qualification.</p>
 
         <h3>1.1 How to Run</h3>
         <ol>
@@ -144,7 +144,11 @@
         </table>
 
         <div class="tip-box">
-            <strong>💡 Week Organization:</strong> If this is the first sync for the current week, the system automatically creates a <strong>week label row</strong> (e.g., "03/16-03/22 (Week 12)") and a <strong>header row</strong> in the HR Spreadsheet before inserting agent rows. This keeps the spreadsheet organized by week.
+            <strong>💡 Week Organization:</strong> If this is the first sync for the current week, the system automatically creates a <strong>week label row</strong> (e.g., "03/16-03/22 (Week 12)") and a <strong>header row</strong> in the <em>QA Bonus Payroll</em> tab before inserting agent rows. This keeps the spreadsheet organized by week.
+        </div>
+
+        <div class="tip-box">
+            <strong>📋 Destination Spreadsheet:</strong> Data is written to the <strong>Qa Bonus HR</strong> workbook → tab <strong>QA Bonus Payroll</strong>. This is a dedicated HR payroll file separate from the RAW_DB used by the app internally.
         </div>
 
         <div class="success-box">

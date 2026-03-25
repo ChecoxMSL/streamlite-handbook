@@ -136,8 +136,39 @@
 
         <img src="https://drive.google.com/thumbnail?id=19ugQsB3SduBObsTbMr9VSQN2LUsMwVYA&sz=w1000" alt="Sidebar Progress Tracker">
 
-        <!-- ─── 2.2 ─── -->
-        <h2>2.2 Step-by-Step Grading</h2>
+        <!-- ─── 2.1b ELIGIBILITY ─── -->
+        <h2>2.2 Who Appears in the Queue — Eligibility Rules</h2>
+
+        <p>Not every agent on the roster is automatically included in the audit queue. The system applies <strong>two eligibility filters</strong> before displaying the list. An agent must pass <em>both</em> conditions:</p>
+
+        <table>
+            <tr>
+                <th>Rule</th>
+                <th>Source</th>
+                <th>Minimum Required</th>
+            </tr>
+            <tr>
+                <td><strong>Confirmed Leads</strong></td>
+                <td>Own Script — Col L (Current Week) / Col M (Last Week)</td>
+                <td>≥ 18 leads</td>
+            </tr>
+            <tr>
+                <td><strong>Days Worked</strong></td>
+                <td>Telemarketing Stats — Col K <code>WORKED DAYS</code></td>
+                <td>≥ 3 days</td>
+            </tr>
+        </table>
+
+        <div class="tip-box">
+            <strong>💡 How the Days-Worked Check Works:</strong> The own script contains a cell (<code>L1</code> for the current week, <code>M1</code> for last week) that points to the active agent roster, e.g. <code>MARCH!$A$713:$Z$904</code>. The app reads that tab, locates each agent via their <strong>User Login ID</strong> (col C), and checks their <strong>WORKED DAYS</strong> value (col K). Agents with fewer than 3 days logged do not appear in the queue, regardless of their lead count.
+        </div>
+
+        <div class="alert-box">
+            <strong>⚠️ Agent Missing from the List?</strong> If you expect to see an agent but they are absent, it is likely because they either did not reach the minimum leads threshold <strong>or</strong> they have fewer than 3 days worked recorded in Telemarketing Stats for the selected week. Check both conditions before escalating.
+        </div>
+
+        <!-- ─── 2.3 ─── -->
+        <h2>2.3 Step-by-Step Grading</h2>
 
         <ol>
 
