@@ -25,6 +25,83 @@ Designed to be embedded in **Google Sites** — each HTML file maps to a page in
 
 ---
 
+## Google Sites — Configuración del Embed
+
+### Cómo está montado
+
+Cada página de Google Sites embebe **un archivo HTML** del repo de GitHub usando la URL raw como `src` de un iframe. El contenido se sirve directamente desde GitHub — no hay hosting externo.
+
+```
+GitHub repo (ChecoxMSL/streamlite-handbook)
+    └── archivo.html
+            ↓  raw URL
+Google Sites → Insert → Embed
+    └── <iframe src="https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/archivo.html">
+```
+
+### Por qué los botones Next/Previous usan `target="_parent"`
+
+Los botones de navegación **no apuntan al archivo HTML vecino** — apuntan a la **URL de Google Sites** de la página siguiente. Además tienen `target="_parent"` para que el clic salga del iframe y navegue la página completa de Sites.
+
+Sin `target="_parent"`, el clic abriría la siguiente página **dentro del iframe** (una página de Sites dentro de otra), rompiendo la navegación.
+
+```html
+<!-- ✅ Así están configurados todos los botones -->
+<a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-3-send-functions"
+   target="_parent" class="nav-btn nav-btn-next">
+    Next →
+</a>
+```
+
+### Raw URLs — formato
+
+```
+https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/{archivo}.html
+```
+
+Ejemplos:
+```
+https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/index.html
+https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/2-4_regrade_cleanup.html
+https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/3-1_architecture.html
+```
+
+### Cómo actualizar una página (flujo normal)
+
+1. Editar el archivo `.html` localmente
+2. `git push` al branch `main`
+3. Google Sites **actualiza automáticamente** — no hay que tocar Sites
+
+### Cómo re-agregar un embed borrado
+
+1. Ir a Google Sites → editar la página correspondiente
+2. **Insert → Embed**
+3. Pegar la raw URL del archivo (formato arriba)
+4. Guardar y publicar
+
+### Tabla completa de embeds
+
+| Google Sites Page | Archivo HTML | Raw URL |
+|---|---|---|
+| Home | `index.html` | `…/main/index.html` |
+| Chapter 1 — QA Agent Guide | `main_chapter1.html` | `…/main/main_chapter1.html` |
+| 1-1 Access & Setup | `1-1_access.html` | `…/main/1-1_access.html` |
+| 1-2 Grading Workflow | `1-2_grading.html` | `…/main/1-2_grading.html` |
+| 1-3 Grading Outputs | `1-3_outputs.html` | `…/main/1-3_outputs.html` |
+| 1-4 Drive & Handoff | `1-4_handoff.html` | `…/main/1-4_handoff.html` |
+| Chapter 2 — Admin Guide | `main_chapter2.html` | `…/main/main_chapter2.html` |
+| 2-1 Admin Access | `2-1_admin_access.html` | `…/main/2-1_admin_access.html` |
+| 2-2 Config & Whitelist | `2-2_config_whitelist.html` | `…/main/2-2_config_whitelist.html` |
+| 2-3 Send Functions | `2-3_send_functions.html` | `…/main/2-3_send_functions.html` |
+| 2-4 Re-grade & Cleanup | `2-4_regrade_cleanup.html` | `…/main/2-4_regrade_cleanup.html` |
+| Chapter 3 — Extra Info | `main_chapter3.html` | `…/main/main_chapter3.html` |
+| 3-1 Architecture | `3-1_architecture.html` | `…/main/3-1_architecture.html` |
+| 3-2 History & Reference | `3-2_history_reference.html` | `…/main/3-2_history_reference.html` |
+
+> `…` = `https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook`
+
+---
+
 ## Site Structure
 
 ```
