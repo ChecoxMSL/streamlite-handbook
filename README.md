@@ -27,17 +27,29 @@ Designed to be embedded in **Google Sites** — each HTML file maps to a page in
 
 ## Google Sites — Configuración del Embed
 
+### Datos del sitio
+
+| Campo | Valor |
+|---|---|
+| Nombre | Streamlite Handbook |
+| Cuenta propietaria | `sergio@marketingleads.com.mx` |
+| URL pública base | `https://sites.google.com/marketingleads.com.mx/streamlite-handbook/` |
+| URL de edición | `https://sites.google.com/d/1M2Dm8d-r8fmu-veWjgFeYdQ1xJ0oCe1y/edit` |
+| Drive Site ID | `1M2Dm8d-r8fmu-veWjgFeYdQ1xJ0oCe1y` |
+
 ### Cómo está montado
 
-Cada página de Google Sites embebe **un archivo HTML** del repo de GitHub usando la URL raw como `src` de un iframe. El contenido se sirve directamente desde GitHub — no hay hosting externo.
+Cada página de Google Sites embebe **un archivo HTML** del repo de GitHub usando **GitHub Pages** como fuente del iframe. El contenido se sirve directamente desde GitHub Pages — no hay hosting externo.
 
 ```
-GitHub repo (ChecoxMSL/streamlite-handbook)
-    └── archivo.html
-            ↓  raw URL
-Google Sites → Insert → Embed
-    └── <iframe src="https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/archivo.html">
+GitHub repo (ChecoxMSL/streamlite-handbook)  →  GitHub Pages
+    └── archivo.html                               ↓
+                          https://checoxmsl.github.io/streamlite-handbook/archivo.html
+                                                   ↓
+                          Google Sites → Insert → Embed → pegar URL
 ```
+
+> ⚠️ **No usar `raw.githubusercontent.com`** — sirve el HTML como `text/plain` y Google Sites no lo renderiza. Siempre usar la URL de GitHub Pages (`checoxmsl.github.io/…`).
 
 ### Por qué los botones Next/Previous usan `target="_parent"`
 
