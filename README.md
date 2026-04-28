@@ -1,18 +1,24 @@
 # QA Bonus Grading App — Employee Handbook (HTML)
 
-Static HTML employee handbook for the **QA Bonus Grading App** (Streamlit v5.4.1).
+Static HTML employee handbook for the **QA Bonus Grading App** (Streamlit v5.4.5).
 Designed to be embedded in **Google Sites** — each HTML file maps to a page in the site.
 
-### Estado del Proyecto: ✅ Listo para produccion
+### Estado del Proyecto: 🔄 Contenido actualizado — assets pendientes
 
 | Item | Estado |
 |---|---|
 | Paginas HTML | 14/14 creadas |
-| Google Drive assets | 20/20 integrados |
+| Google Drive assets — existentes | 20/20 integrados |
+| Google Drive assets — nuevos (v5.4.5) | 0/1 pendientes (ver abajo) |
 | Google Sites URLs | 14/14 publicadas |
 | Navegacion (Prev/Next) | ✅ Todos los hrefs apuntan a Google Sites |
 | `target="_parent"` (iframe) | ✅ Aplicado en los 3 capitulos |
 | Hub links (cards, breadcrumbs, back) | ✅ Completo |
+
+#### Cambios v5.4.5 (2026-04-28)
+- `2-4_regrade_cleanup.html` — nueva sección **3. Report Error 🐛**: cuando usar el botón, flujo paso a paso, qué recibe el administrador
+- `3-1_architecture.html` — `Error_Reports/` agregado al árbol de Drive; nueva sección **4.1 Agent Name Aliases** en BigQuery
+- `README.md` — version bump a v5.4.5, assets pendientes actualizados
 
 > **Google Sites URL base:** `https://sites.google.com/marketingleads.com.mx/streamlite-handbook/`
 > **Indice completo de URLs:** ver `index.txt`
@@ -128,14 +134,20 @@ Home                       index.html                 Landing page — 3 chapter
 - [x] **Audit History Panel** — `3-2_history_reference.html` linea 166
   - Screenshot del tab 📚 History con la tabla de un week slot archivado
 
+### Nuevos assets — v5.4.5 ⏳ pendientes
+
+- [ ] **Report Error Expander** — `2-4_regrade_cleanup.html` sección 3
+  - Screenshot del expander 🐛 abierto mostrando: error capturado, text area de notas, file uploader, y botón 📨 Send
+  - Placeholder a agregar: `REPLACE_WITH_REPORT_ERROR_SCREENSHOT_ID`
+
 ### Resumen de assets
 
 | Estado | Cantidad | Detalle |
 |---|---|---|
 | Completas | 20 | Todos los assets tienen Drive ID |
-| Pendientes | 0 | — |
+| Pendientes (v5.4.5) | 1 | Report Error expander screenshot |
 | Orientación vertical | 3 | `2-1` PIN Entry, `2-1` Env Toggle, `2-3` Chat Dispatch |
-| **Total** | **20** | **✅ Listo para publicar** |
+| **Total** | **21** | **🔄 1 asset pendiente** |
 
 ---
 

@@ -170,8 +170,67 @@
             <strong>💡 Safe Operation:</strong> Since all PDFs are already uploaded to Google Drive before reaching this point, deleting local copies has no impact on the stored records or links shared with agents.
         </div>
 
+        <!-- ─── REPORT ERROR ─── -->
+        <h2>3. Report Error 🐛</h2>
+
+        <p>The <strong>🐛 Report Error</strong> button in the sidebar lets <strong>any QA user</strong> (no admin PIN required) send a diagnostic message directly to the administrator's Google Chat when an error occurs in the app.</p>
+
+        <div class="tip-box">
+            <strong>📍 Location:</strong> Sidebar → expand <strong>🐛 Report Error</strong> (above the Logout button).
+        </div>
+
+        <h3>3.1 When to Use It</h3>
+        <p>Use this button whenever you see any of the following:</p>
+
+        <table>
+            <tr>
+                <th>What you see</th>
+                <th>Error type captured</th>
+            </tr>
+            <tr><td>Red banner: "No calls found in BigQuery for <em>agent</em>…"</td><td><code>BQ_NO_CALLS</code></td></tr>
+            <tr><td>Red banner: "[BigQuery Error] …" in the main area</td><td><code>BQ_QUERY_EXCEPTION</code></td></tr>
+            <tr><td>Red banner: "An unexpected error occurred while rendering the panel"</td><td><code>RENDER_EXCEPTION</code></td></tr>
+            <tr><td>Any other unexpected behavior you want to report</td><td>Manual report</td></tr>
+        </table>
+
+        <div class="alert-box">
+            <strong>⚠️ Note:</strong> The app automatically captures the last error that occurred in the session. When you open the expander, you will usually see it pre-filled with the error type and message — you don't need to copy/paste anything.
+        </div>
+
+        <h3>3.2 How to Send an Error Report</h3>
+        <ol>
+            <li>When you see a red error banner, <strong>take a screenshot</strong> immediately using your operating system (Windows: <code>Win + Shift + S</code> or <code>PrtSc</code>).</li>
+            <li>In the sidebar, expand <strong>🐛 Report Error</strong>.</li>
+            <li>The last captured error will be displayed at the top of the expander.</li>
+            <li>In the text area, <strong>describe what you were doing</strong> when the error appeared (e.g., "I was auditing a garcia when the red banner appeared").</li>
+            <li>Click <strong>📸 Attach screenshot</strong> and select the screenshot you took.</li>
+            <li>A <strong>preview</strong> of the screenshot will appear — verify it shows the error clearly.</li>
+            <li>Click <strong>📨 Send Error Report to GChat</strong>.</li>
+            <li>A confirmation message confirms the report was sent.</li>
+        </ol>
+
+        <h3>3.3 What the Administrator Receives</h3>
+        <p>The error report arrives as a Google Chat DM containing:</p>
+        <ul>
+            <li><strong>Timestamp</strong> — exact time the report was sent</li>
+            <li><strong>Environment</strong> — PROD or SANDBOX</li>
+            <li><strong>QA User</strong> — who sent the report</li>
+            <li><strong>Agent &amp; Week</strong> — what was being audited</li>
+            <li><strong>Error type &amp; full message</strong></li>
+            <li><strong>Python traceback</strong> (when available) — the exact technical error</li>
+            <li><strong>Screenshot link</strong> — a Google Drive link to the screenshot you attached</li>
+            <li><strong>Your notes</strong></li>
+        </ul>
+
+        <div class="success-box">
+            <strong>✅ Good to know:</strong> The screenshot is automatically uploaded to Google Drive (folder <strong>Error_Reports/</strong>) before the message is sent. You don't need to attach it to the Chat message manually — it is already included as a link.
+        </div>
+
+        <!-- ASSET PENDING: replace REPLACE_WITH_REPORT_ERROR_SCREENSHOT_ID with the Drive ID of the Report Error expander screenshot -->
+        <!-- <img src="https://drive.google.com/thumbnail?id=REPLACE_WITH_REPORT_ERROR_SCREENSHOT_ID&sz=w1000" alt="Report Error Expander"> -->
+
         <!-- ─── SUMMARY ─── -->
-        <h2>3. Quick Reference — Corrective Actions</h2>
+        <h2>4. Quick Reference — Corrective Actions</h2>
 
         <table>
             <tr>
@@ -184,6 +243,7 @@
             <tr><td>Whitelisted agent should not be full bonus</td><td>Remove from Whitelist → Re-grade if needed</td></tr>
             <tr><td>Entire week needs to start over</td><td>🗑️ Reset Entire Week Ledger</td></tr>
             <tr><td>Local PDF files accumulating on server</td><td>🗑️ Delete All Local PDFs</td></tr>
+            <tr><td>Red error banner or unexpected crash appears</td><td>🐛 Report Error → describe + attach screenshot → 📨 Send</td></tr>
         </table>
 
         <!-- ─── NAV ─── -->

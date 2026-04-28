@@ -196,13 +196,14 @@
 
         <div class="tree-diagram">
             📁 <span class="tree-folder">Shared Drive Folder</span><br>
-            &nbsp;└── 📁 <span class="tree-folder">Mar 16th to Mar 22nd</span> &nbsp;&nbsp;← Current week (Mon–Sun)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">ARMY</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"a "</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">CDMX</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"v "</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">EGYPT</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"e "</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">NAYARIT</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"n "</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">SP-PR</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"sp " / "pr "</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📁 <span class="tree-folder">WEST</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"w "</span>
+            &nbsp;├── 📁 <span class="tree-folder">Mar 16th to Mar 22nd</span> &nbsp;&nbsp;← Current week (Mon–Sun)<br>
+            &nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">ARMY</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"a "</span><br>
+            &nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">CDMX</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"v "</span><br>
+            &nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">EGYPT</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"e "</span><br>
+            &nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">NAYARIT</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"n "</span><br>
+            &nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 <span class="tree-folder">SP-PR</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"sp " / "pr "</span><br>
+            &nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;└── 📁 <span class="tree-folder">WEST</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Agents starting with <span class="tree-service">"w "</span><br>
+            &nbsp;└── 📁 <span class="tree-folder">Error_Reports</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Screenshots from 🐛 Report Error button (permanent)
         </div>
 
         <h3>3.1 Office Prefix Mapping</h3>
@@ -222,8 +223,9 @@
         <h3>3.2 File Permissions &amp; Retention</h3>
         <ul>
             <li>Files are set to <strong>"Anyone with the link" — Reader</strong> permission. This enables link preview in Google Chat.</li>
-            <li>Files are <strong>retained permanently</strong> on Drive. There is no automatic cleanup.</li>
+            <li>All PDFs and screenshots are <strong>retained permanently</strong> on Drive. There is no automatic cleanup.</li>
             <li>Local copies on the server are auto-deleted after upload (configurable via <code>App_Config</code>).</li>
+            <li>Error screenshots are stored in <strong>Error_Reports/</strong> (a subfolder at root level, not inside a week folder).</li>
         </ul>
 
         <!-- ─── BIGQUERY ─── -->
@@ -239,6 +241,27 @@
 
         <div class="alert-box">
             <strong>⚠️ BigQuery Timeouts:</strong> If a query takes too long, the app shows an alert. Click the <strong>BQ Alert</strong> button in the empty state panel to retry. If the issue persists, contact the system administrator.
+        </div>
+
+        <h3>4.1 Agent Name Aliases</h3>
+        <p>The app matches agent names from the Google Sheet against the <code>user_login_id</code> field in BigQuery. If an agent is <strong>renamed or transferred to a different office</strong> and their ReadyMode login ID changes, the two names will no longer match — causing a "No calls found" warning.</p>
+
+        <p>To fix this without requiring a Sheet update, the app maintains an <strong>alias mapping</strong> in <code>config.py</code>:</p>
+
+        <div class="tree-diagram">
+            <span style="color:#68D391;">AGENT_NAME_ALIASES</span> = &#123;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#F6AD55;">"old sheet name"</span>: <span style="color:#F6AD55;">"new bq login id"</span>,<br>
+            &#125;
+        </div>
+
+        <p>When an alias is configured, the app automatically uses the new BQ name when querying call logs — both in the database query and in the row-level filter. No other files need to change.</p>
+
+        <div class="tip-box">
+            <strong>💡 Example:</strong> Agent <code>n gaytan</code> was renamed and transferred. Their ReadyMode login is now <code>a gaytan</code>. Adding <code>"n gaytan": "a gaytan"</code> to the alias map resolves the "No calls found" warning immediately, without touching the Sheet.
+        </div>
+
+        <div class="alert-box">
+            <strong>⚠️ Who can update aliases?</strong> Only a developer with access to the app's source code can add or modify <code>AGENT_NAME_ALIASES</code> in <code>config.py</code>. If you see a "No calls found" warning for an agent whose name recently changed, use the <strong>🐛 Report Error</strong> button in the sidebar to notify the administrator.
         </div>
 
         <!-- ─── NAV ─── -->
