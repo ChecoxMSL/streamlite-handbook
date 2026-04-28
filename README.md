@@ -3,100 +3,100 @@
 Static HTML employee handbook for the **QA Bonus Grading App** (Streamlit v5.4.5).
 Designed to be embedded in **Google Sites** — each HTML file maps to a page in the site.
 
-### Estado del Proyecto: 🔄 Contenido actualizado — assets pendientes
+### Project Status: 🔄 Content updated — assets pending
 
-| Item | Estado |
+| Item | Status |
 |---|---|
-| Paginas HTML | 14/14 creadas |
-| Google Drive assets — existentes | 20/20 integrados |
-| Google Drive assets — nuevos (v5.4.5) | 0/1 pendientes (ver abajo) |
-| Google Sites URLs | 14/14 publicadas |
-| Navegacion (Prev/Next) | ✅ Todos los hrefs apuntan a Google Sites |
-| `target="_parent"` (iframe) | ✅ Aplicado en los 3 capitulos |
-| Hub links (cards, breadcrumbs, back) | ✅ Completo |
+| HTML pages | 14/14 created |
+| Google Drive assets — existing | 20/20 integrated |
+| Google Drive assets — new (v5.4.5) | 0/1 pending (see below) |
+| Google Sites URLs | 14/14 published |
+| Navigation (Prev/Next) | ✅ All hrefs point to Google Sites URLs |
+| `target="_parent"` (iframe) | ✅ Applied in all 3 chapters |
+| Hub links (cards, breadcrumbs, back) | ✅ Complete |
 
-#### Cambios v5.4.5 (2026-04-28)
-- `2-4_regrade_cleanup.html` — nueva sección **3. Report Error 🐛**: cuando usar el botón, flujo paso a paso, qué recibe el administrador
-- `3-1_architecture.html` — `Error_Reports/` agregado al árbol de Drive; nueva sección **4.1 Agent Name Aliases** en BigQuery
-- `README.md` — version bump a v5.4.5, assets pendientes actualizados
+#### Changes v5.4.5 (2026-04-28)
+- `2-4_regrade_cleanup.html` — new section **3. Report Error 🐛**: when to use it, step-by-step flow, what the admin receives
+- `3-1_architecture.html` — `Error_Reports/` added to Drive tree; new section **4.1 Agent Name Aliases** in BigQuery
+- `README.md` — version bump to v5.4.5, pending assets updated, full English translation
 
-> **Google Sites URL base:** `https://sites.google.com/marketingleads.com.mx/streamlite-handbook/`
-> **Indice completo de URLs:** ver `index.txt`
+> **Google Sites base URL:** `https://sites.google.com/marketingleads.com.mx/streamlite-handbook/`
+> **Full URL index:** see `index.txt`
 
 ---
 
-## Google Sites — Configuración del Embed
+## Google Sites — Embed Configuration
 
-### Datos del sitio
+### Site Details
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
-| Nombre | Streamlite Handbook |
-| Cuenta propietaria | `sergio@marketingleads.com.mx` |
-| URL pública base | `https://sites.google.com/marketingleads.com.mx/streamlite-handbook/` |
-| URL de edición | `https://sites.google.com/d/1M2Dm8d-r8fmu-veWjgFeYdQ1xJ0oCe1y/edit` |
+| Site name | Streamlite Handbook |
+| Owner account | `sergio@marketingleads.com.mx` |
+| Public base URL | `https://sites.google.com/marketingleads.com.mx/streamlite-handbook/` |
+| Edit URL | `https://sites.google.com/d/1M2Dm8d-r8fmu-veWjgFeYdQ1xJ0oCe1y/edit` |
 | Drive Site ID | `1M2Dm8d-r8fmu-veWjgFeYdQ1xJ0oCe1y` |
 
-### Cómo está montado
+### How It Works
 
-Cada página de Google Sites embebe **un archivo HTML** del repo de GitHub usando **GitHub Pages** como fuente del iframe. El contenido se sirve directamente desde GitHub Pages — no hay hosting externo.
+Each Google Sites page embeds **one HTML file** from the GitHub repo using **GitHub Pages** as the iframe source. Content is served directly from GitHub Pages — no external hosting required.
 
 ```
 GitHub repo (ChecoxMSL/streamlite-handbook)  →  GitHub Pages
-    └── archivo.html                               ↓
-                          https://checoxmsl.github.io/streamlite-handbook/archivo.html
+    └── file.html                                  ↓
+                     https://checoxmsl.github.io/streamlite-handbook/file.html
                                                    ↓
-                          Google Sites → Insert → Embed → pegar URL
+                     Google Sites → Insert → Embed → paste URL
 ```
 
-> ⚠️ **No usar `raw.githubusercontent.com`** — sirve el HTML como `text/plain` y Google Sites no lo renderiza. Siempre usar la URL de GitHub Pages (`checoxmsl.github.io/…`).
+> ⚠️ **Do NOT use `raw.githubusercontent.com`** — it serves HTML as `text/plain` and Google Sites will not render it. Always use the GitHub Pages URL (`checoxmsl.github.io/…`).
 
-### Por qué los botones Next/Previous usan `target="_parent"`
+### Why Next/Previous Buttons Use `target="_parent"`
 
-Los botones de navegación **no apuntan al archivo HTML vecino** — apuntan a la **URL de Google Sites** de la página siguiente. Además tienen `target="_parent"` para que el clic salga del iframe y navegue la página completa de Sites.
+Navigation buttons **do not link to the neighboring HTML file** — they link to the **Google Sites URL** of the next page. They also use `target="_parent"` so that clicking the button navigates the full Sites page instead of loading the next page inside the iframe.
 
-Sin `target="_parent"`, el clic abriría la siguiente página **dentro del iframe** (una página de Sites dentro de otra), rompiendo la navegación.
+Without `target="_parent"`, clicking Next would open the next page **inside the iframe** (a Sites page nested inside another), breaking navigation entirely.
 
 ```html
-<!-- ✅ Así están configurados todos los botones -->
+<!-- ✅ How all nav buttons are configured -->
 <a href="https://sites.google.com/marketingleads.com.mx/streamlite-handbook/2-admin-guide/2-3-send-functions"
    target="_parent" class="nav-btn nav-btn-next">
     Next →
 </a>
 ```
 
-### GitHub Pages URLs — formato
+### GitHub Pages URLs — Format
 
-El repo tiene **GitHub Pages** habilitado. Usar siempre estas URLs (no `raw.githubusercontent.com` — ese sirve el HTML como texto plano y Google Sites no lo renderiza).
+The repo has **GitHub Pages** enabled. Always use these URLs when adding embeds in Google Sites.
 
 ```
-https://checoxmsl.github.io/streamlite-handbook/{archivo}.html
+https://checoxmsl.github.io/streamlite-handbook/{file}.html
 ```
 
-Ejemplos:
+Examples:
 ```
 https://checoxmsl.github.io/streamlite-handbook/index.html
 https://checoxmsl.github.io/streamlite-handbook/2-4_regrade_cleanup.html
 https://checoxmsl.github.io/streamlite-handbook/3-1_architecture.html
 ```
 
-### Cómo actualizar una página (flujo normal)
+### How to Update a Page (Normal Flow)
 
-1. Editar el archivo `.html` localmente
-2. `git push` al branch `main`
-3. GitHub Pages se actualiza en ~1 minuto
-4. Google Sites **actualiza automáticamente** — no hay que tocar Sites
+1. Edit the `.html` file locally
+2. `git push` to the `main` branch
+3. GitHub Pages updates in ~1 minute
+4. Google Sites **updates automatically** — no changes needed in Sites
 
-### Cómo re-agregar un embed borrado
+### How to Re-add a Deleted Embed
 
-1. Ir a Google Sites → editar la página correspondiente
+1. Go to Google Sites → edit the corresponding page
 2. **Insert → Embed**
-3. Pegar la GitHub Pages URL del archivo (formato arriba)
-4. Guardar y publicar
+3. Paste the GitHub Pages URL for that file (format above)
+4. Save and publish
 
-### Tabla completa de embeds
+### Full Embed Table
 
-| Google Sites Page | Archivo HTML | GitHub Pages URL |
+| Google Sites Page | HTML File | GitHub Pages URL |
 |---|---|---|
 | Home | `index.html` | `…/index.html` |
 | Chapter 1 — QA Agent Guide | `main_chapter1.html` | `…/main_chapter1.html` |
@@ -141,7 +141,7 @@ Home                       index.html                 Landing page — 3 chapter
     └── History & Ref      3-2_history_reference.html Week slots, auto-archival, semaphore legend
 ```
 
-### Legacy files (not linked)
+### Legacy Files (not linked)
 
 | File | Note |
 |---|---|
@@ -173,89 +173,89 @@ Home                       index.html                 Landing page — 3 chapter
 
 ## Assets Checklist
 
-> Todos los assets están completos. Drive IDs registrados abajo.
-> Formato del src: `https://drive.google.com/thumbnail?id=TU_ID_AQUI&sz=w1000`
+> All assets are complete. Drive IDs registered below.
+> Image src format: `https://drive.google.com/thumbnail?id=FILE_ID_HERE&sz=w1000`
 >
-> ⚠️ **Nota sobre orientación:** Varios screenshots del Chapter 2 fueron capturados en **formato vertical** (portrait). Los archivos HTML correspondientes ya contemplan esto — no es necesario rotar ni reescalar antes de subir a Drive.
+> ⚠️ **Note on orientation:** Several Chapter 2 screenshots were captured in **portrait (vertical)** format. The corresponding HTML files already account for this — no rotation or rescaling needed before uploading to Drive.
 
 ### Logo
 
-- [x] **Company Logo** — `index.html` linea 291
+- [x] **Company Logo** — `index.html` line 291
   - Placeholder: `REPLACE_WITH_LOGO_ID`
-  - Tomar de: `assets/logo.png` del proyecto Streamlit, subir a Drive, copiar el ID
+  - Source: `assets/logo.png` from the Streamlit project — upload to Drive and copy the file ID
 
-### Chapter 1 — QA Agent Guide ✅ completas
+### Chapter 1 — QA Agent Guide ✅ complete
 
-- [x] Login Screen — `1-1_access.html` linea 120 — `id=1kLIGmLMf0fvyi76eUGcm6dqmt7y_qpSc`
-- [x] Sidebar Progress Tracker — `1-1_access.html` linea 194 — `id=19ugQsB3SduBObsTbMr9VSQN2LUsMwVYA`
-- [x] Sidebar Progress Tracker — `1-2_grading.html` linea 133 — `id=19ugQsB3SduBObsTbMr9VSQN2LUsMwVYA`
-- [x] Agent Selection — `1-2_grading.html` linea 143 — `id=1jfQd_jJZh8_nNSJm1QCGFJNrihp1oUCu`
-- [x] Call Logs Dashboard — `1-2_grading.html` linea 154 — `id=1PfTEHi6TDdqcLiI4VB2NutIlrI1zF1ht`
-- [x] Report Card PDF — `1-3_outputs.html` linea 191 — `id=1ZMMMLM5RCqlPImymxkz62_exPIMhNJ4v`
-- [x] Full Bonus Certificate PDF — `1-3_outputs.html` linea 195 — `id=1bUFEYFNhPCO7GV2bCekqLWVEhe9IpPKi`
-- [x] Suspension Banner PNG — `1-3_outputs.html` linea 199 — `id=1ToYvraf6a5AGqxFZfZ-8yPehBz4xaQJ7`
+- [x] Login Screen — `1-1_access.html` line 120 — `id=1kLIGmLMf0fvyi76eUGcm6dqmt7y_qpSc`
+- [x] Sidebar Progress Tracker — `1-1_access.html` line 194 — `id=19ugQsB3SduBObsTbMr9VSQN2LUsMwVYA`
+- [x] Sidebar Progress Tracker — `1-2_grading.html` line 133 — `id=19ugQsB3SduBObsTbMr9VSQN2LUsMwVYA`
+- [x] Agent Selection — `1-2_grading.html` line 143 — `id=1jfQd_jJZh8_nNSJm1QCGFJNrihp1oUCu`
+- [x] Call Logs Dashboard — `1-2_grading.html` line 154 — `id=1PfTEHi6TDdqcLiI4VB2NutIlrI1zF1ht`
+- [x] Report Card PDF — `1-3_outputs.html` line 191 — `id=1ZMMMLM5RCqlPImymxkz62_exPIMhNJ4v`
+- [x] Full Bonus Certificate PDF — `1-3_outputs.html` line 195 — `id=1bUFEYFNhPCO7GV2bCekqLWVEhe9IpPKi`
+- [x] Suspension Banner PNG — `1-3_outputs.html` line 199 — `id=1ToYvraf6a5AGqxFZfZ-8yPehBz4xaQJ7`
 
-### Chapter 2 — Admin Guide ✅ completas
+### Chapter 2 — Admin Guide ✅ complete
 
-> ⚠️ Los siguientes items marcados con `[vertical]` fueron capturados en orientación portrait.
-> Verificar que el contenedor `<img>` en el HTML tenga `width: 100%` y sin `height` fijo para que escalen correctamente.
+> ⚠️ Items marked `[vertical]` were captured in portrait orientation.
+> Make sure the `<img>` container in the HTML has `width: 100%` and no fixed `height` so they scale correctly.
 
-- [x] **Admin PIN Entry** — `2-1_admin_access.html` linea 99 `[vertical]`
-  - Screenshot del campo de PIN en el expander ⚙️ Admin Settings
-- [x] **Environment Toggle** — `2-1_admin_access.html` linea 162 `[vertical]`
-  - Screenshot del toggle PROD/SANDBOX con el badge de ambiente visible
-- [x] **Edit Penalty Rules Panel** — `2-2_config_whitelist.html` linea 97
-  - Screenshot de los sliders de deduccion y threshold por categoria
-- [x] **Full Bonus Whitelist Panel** — `2-2_config_whitelist.html` linea 135
-  - Screenshot del multiselect de agentes con boton Save Whitelist
-- [x] **SP Comercial Tier Panel** — `2-2_config_whitelist.html` linea 161
-  - Screenshot del multiselect SP Tier con el lead threshold visible
-- [x] **HR Sync Button** — `2-3_send_functions.html` linea 130
-  - Screenshot del panel Send Functions mostrando el boton 📊 Send QA Bonus to HR
-- [x] **Chat Dispatch Section** — `2-3_send_functions.html` linea 170 `[vertical]`
-  - Screenshot del panel 📤 Send PDF Preview con la lista de agentes y boton Send
-- [x] **Re-grade Agent Panel** — `2-4_regrade_cleanup.html` linea 101
-  - Screenshot del panel Re-grade con el search, dropdown y boton Reset to pending
-- [x] **Ledger & Cleanup Section** — `2-4_regrade_cleanup.html` linea 126
-  - Screenshot del panel Ledger mostrando agent search, checkboxes y botones
+- [x] **Admin PIN Entry** — `2-1_admin_access.html` line 99 `[vertical]`
+  - Screenshot of the PIN field inside the ⚙️ Admin Settings expander
+- [x] **Environment Toggle** — `2-1_admin_access.html` line 162 `[vertical]`
+  - Screenshot of the PROD/SANDBOX toggle with the environment badge visible
+- [x] **Edit Penalty Rules Panel** — `2-2_config_whitelist.html` line 97
+  - Screenshot of the deduction sliders and threshold inputs per category
+- [x] **Full Bonus Whitelist Panel** — `2-2_config_whitelist.html` line 135
+  - Screenshot of the agent multiselect with the Save Whitelist button
+- [x] **SP Comercial Tier Panel** — `2-2_config_whitelist.html` line 161
+  - Screenshot of the SP Tier multiselect with the lead threshold visible
+- [x] **HR Sync Button** — `2-3_send_functions.html` line 130
+  - Screenshot of the Send Functions panel showing the 📊 Send QA Bonus to HR button
+- [x] **Chat Dispatch Section** — `2-3_send_functions.html` line 170 `[vertical]`
+  - Screenshot of the 📤 Send PDF Preview panel with agent list and Send button
+- [x] **Re-grade Agent Panel** — `2-4_regrade_cleanup.html` line 101
+  - Screenshot of the Re-grade panel with search, dropdown, and Reset to pending button
+- [x] **Ledger & Cleanup Section** — `2-4_regrade_cleanup.html` line 126
+  - Screenshot of the Ledger panel showing agent search, checkboxes, and action buttons
 
-### Chapter 3 — Extra Information ✅ completas
+### Chapter 3 — Extra Information ✅ complete
 
-- [x] **System Integration Flow Diagram** — `3-1_architecture.html` linea 157
-  - Exportado de `System_Integration_Flow_v5.4.1.drawio` como PNG
-- [x] **Audit History Panel** — `3-2_history_reference.html` linea 166
-  - Screenshot del tab 📚 History con la tabla de un week slot archivado
+- [x] **System Integration Flow Diagram** — `3-1_architecture.html` line 157
+  - Exported from `System_Integration_Flow_v5.4.1.drawio` as PNG
+- [x] **Audit History Panel** — `3-2_history_reference.html` line 166
+  - Screenshot of the 📚 History tab with an archived week slot table visible
 
-### Nuevos assets — v5.4.5 ⏳ pendientes
+### New Assets — v5.4.5 ⏳ pending
 
-- [ ] **Report Error Expander** — `2-4_regrade_cleanup.html` sección 3
-  - Screenshot del expander 🐛 abierto mostrando: error capturado, text area de notas, file uploader, y botón 📨 Send
-  - Placeholder a agregar: `REPLACE_WITH_REPORT_ERROR_SCREENSHOT_ID`
+- [ ] **Report Error Expander** — `2-4_regrade_cleanup.html` section 3
+  - Screenshot of the 🐛 expander open showing: captured error, notes text area, file uploader, and 📨 Send button
+  - Placeholder to add: `REPLACE_WITH_REPORT_ERROR_SCREENSHOT_ID`
 
-### Resumen de assets
+### Assets Summary
 
-| Estado | Cantidad | Detalle |
+| Status | Count | Detail |
 |---|---|---|
-| Completas | 20 | Todos los assets tienen Drive ID |
-| Pendientes (v5.4.5) | 1 | Report Error expander screenshot |
-| Orientación vertical | 3 | `2-1` PIN Entry, `2-1` Env Toggle, `2-3` Chat Dispatch |
-| **Total** | **21** | **🔄 1 asset pendiente** |
+| Complete | 20 | All assets have a Drive ID |
+| Pending (v5.4.5) | 1 | Report Error expander screenshot |
+| Portrait orientation | 3 | `2-1` PIN Entry, `2-1` Env Toggle, `2-3` Chat Dispatch |
+| **Total** | **21** | **🔄 1 asset pending** |
 
 ---
 
-## Navigation URLs — ✅ Completo
+## Navigation URLs — ✅ Complete
 
-> Todas las URLs de Google Sites han sido aplicadas en los botones Previous/Next y en los links de navegacion (breadcrumbs, cards, back links).
-> Todos los subpages tienen `target="_parent"` para compatibilidad con iframe en Google Sites.
+> All Google Sites URLs have been applied to the Previous/Next buttons and navigation links (breadcrumbs, cards, back links).
+> All subpages use `target="_parent"` for iframe compatibility in Google Sites.
 
 ### Hub & Main Pages
 
-| Archivo | Links actualizados |
+| File | Links updated |
 |---|---|
 | `index.html` | 3 chapter card hrefs → Google Sites URLs |
-| `main_chapter1.html` | 4 card hrefs + breadcrumb Home + back link |
-| `main_chapter2.html` | 4 card hrefs + breadcrumb Home + back link |
-| `main_chapter3.html` | 2 card hrefs + breadcrumb Home + back link |
+| `main_chapter1.html` | 4 card hrefs + Home breadcrumb + back link |
+| `main_chapter2.html` | 4 card hrefs + Home breadcrumb + back link |
+| `main_chapter3.html` | 2 card hrefs + Home breadcrumb + back link |
 
 ### Chapter 1 — Subpage Nav Buttons (`target="_parent"`)
 
@@ -280,10 +280,10 @@ Home                       index.html                 Landing page — 3 chapter
 
 ## How to Add a New Page
 
-1. Copy an existing content page (e.g., `2-2_config_whitelist.html`) as template.
+1. Copy an existing content page (e.g., `2-2_config_whitelist.html`) as a template.
 2. Name it `{chapter}-{page}_{slug}.html` (e.g., `3-3_faq.html`).
 3. Update the page indicator badge (`Page X of Y`) and chapter label.
-4. Wire Previous/Next nav buttons to the neighboring pages.
+4. Wire the Previous/Next nav buttons to the neighboring Google Sites URLs.
 5. Add a card for the new page in the corresponding `main_chapter*.html`.
 6. Update the progress bar count in `main_chapter*.html`.
 
