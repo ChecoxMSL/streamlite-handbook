@@ -53,52 +53,55 @@ Sin `target="_parent"`, el clic abriría la siguiente página **dentro del ifram
 </a>
 ```
 
-### Raw URLs — formato
+### GitHub Pages URLs — formato
+
+El repo tiene **GitHub Pages** habilitado. Usar siempre estas URLs (no `raw.githubusercontent.com` — ese sirve el HTML como texto plano y Google Sites no lo renderiza).
 
 ```
-https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/{archivo}.html
+https://checoxmsl.github.io/streamlite-handbook/{archivo}.html
 ```
 
 Ejemplos:
 ```
-https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/index.html
-https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/2-4_regrade_cleanup.html
-https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook/main/3-1_architecture.html
+https://checoxmsl.github.io/streamlite-handbook/index.html
+https://checoxmsl.github.io/streamlite-handbook/2-4_regrade_cleanup.html
+https://checoxmsl.github.io/streamlite-handbook/3-1_architecture.html
 ```
 
 ### Cómo actualizar una página (flujo normal)
 
 1. Editar el archivo `.html` localmente
 2. `git push` al branch `main`
-3. Google Sites **actualiza automáticamente** — no hay que tocar Sites
+3. GitHub Pages se actualiza en ~1 minuto
+4. Google Sites **actualiza automáticamente** — no hay que tocar Sites
 
 ### Cómo re-agregar un embed borrado
 
 1. Ir a Google Sites → editar la página correspondiente
 2. **Insert → Embed**
-3. Pegar la raw URL del archivo (formato arriba)
+3. Pegar la GitHub Pages URL del archivo (formato arriba)
 4. Guardar y publicar
 
 ### Tabla completa de embeds
 
-| Google Sites Page | Archivo HTML | Raw URL |
+| Google Sites Page | Archivo HTML | GitHub Pages URL |
 |---|---|---|
-| Home | `index.html` | `…/main/index.html` |
-| Chapter 1 — QA Agent Guide | `main_chapter1.html` | `…/main/main_chapter1.html` |
-| 1-1 Access & Setup | `1-1_access.html` | `…/main/1-1_access.html` |
-| 1-2 Grading Workflow | `1-2_grading.html` | `…/main/1-2_grading.html` |
-| 1-3 Grading Outputs | `1-3_outputs.html` | `…/main/1-3_outputs.html` |
-| 1-4 Drive & Handoff | `1-4_handoff.html` | `…/main/1-4_handoff.html` |
-| Chapter 2 — Admin Guide | `main_chapter2.html` | `…/main/main_chapter2.html` |
-| 2-1 Admin Access | `2-1_admin_access.html` | `…/main/2-1_admin_access.html` |
-| 2-2 Config & Whitelist | `2-2_config_whitelist.html` | `…/main/2-2_config_whitelist.html` |
-| 2-3 Send Functions | `2-3_send_functions.html` | `…/main/2-3_send_functions.html` |
-| 2-4 Re-grade & Cleanup | `2-4_regrade_cleanup.html` | `…/main/2-4_regrade_cleanup.html` |
-| Chapter 3 — Extra Info | `main_chapter3.html` | `…/main/main_chapter3.html` |
-| 3-1 Architecture | `3-1_architecture.html` | `…/main/3-1_architecture.html` |
-| 3-2 History & Reference | `3-2_history_reference.html` | `…/main/3-2_history_reference.html` |
+| Home | `index.html` | `…/index.html` |
+| Chapter 1 — QA Agent Guide | `main_chapter1.html` | `…/main_chapter1.html` |
+| 1-1 Access & Setup | `1-1_access.html` | `…/1-1_access.html` |
+| 1-2 Grading Workflow | `1-2_grading.html` | `…/1-2_grading.html` |
+| 1-3 Grading Outputs | `1-3_outputs.html` | `…/1-3_outputs.html` |
+| 1-4 Drive & Handoff | `1-4_handoff.html` | `…/1-4_handoff.html` |
+| Chapter 2 — Admin Guide | `main_chapter2.html` | `…/main_chapter2.html` |
+| 2-1 Admin Access | `2-1_admin_access.html` | `…/2-1_admin_access.html` |
+| 2-2 Config & Whitelist | `2-2_config_whitelist.html` | `…/2-2_config_whitelist.html` |
+| 2-3 Send Functions | `2-3_send_functions.html` | `…/2-3_send_functions.html` |
+| 2-4 Re-grade & Cleanup | `2-4_regrade_cleanup.html` | `…/2-4_regrade_cleanup.html` |
+| Chapter 3 — Extra Info | `main_chapter3.html` | `…/main_chapter3.html` |
+| 3-1 Architecture | `3-1_architecture.html` | `…/3-1_architecture.html` |
+| 3-2 History & Reference | `3-2_history_reference.html` | `…/3-2_history_reference.html` |
 
-> `…` = `https://raw.githubusercontent.com/ChecoxMSL/streamlite-handbook`
+> `…` = `https://checoxmsl.github.io/streamlite-handbook`
 
 ---
 
